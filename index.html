@@ -117,7 +117,10 @@
       <tr><td>ゾウ</td><td class="num">1,000 kg</td></tr>
       <tr><td>マンモス</td><td class="num">6,000 kg</td></tr>
     </table>
-    <p>「おまかせ」設定では、<b>2頭以上の群れになる最大の動物</b>を自動で選びます（端数は切り捨て）。ホーム画面の壁は5種を混ぜた装飾で、<b>数字とキャプションは常に実数</b>です。</p>
+    <p>「おまかせ」設定では、<b>大きい動物から順に取れるだけ取る</b>方式で分解します（マンモス → ゾウ → ゴリラ → 力士 → 人。端数は切り捨て）。たとえば 3,900 kg なら ゾウ3・ゴリラ4・人1、12,400 kg なら マンモス1・ゾウ6・ゴリラ2 です。</p>
+    <p><b>マンモスだけは 8,000 kg から</b>現れます（換算基準は 6,000 kg ですが、1頭で立たせないようにお供の分を残すため）。2頭目は 14,000 kg から。日次・週次のカードではマンモスは最大2頭までで、それ以上はゾウ以下に分解されます（生涯合計など長期の集計では上限なしで繰り上がります）。</p>
+    <p>設定の「群れの動物」で特定の1種を選ぶこともできます。その場合は <code>ボリューム ÷ その動物の基準重量</code> の頭数になります。</p>
+    <p>ホーム画面の壁に立っている動物は<b>すべて実際に挙げた分</b>です（装飾ではありません）。週明けは空で、記録するたびに増えます。</p>
 
     <h2>よくある質問</h2>
     <h3>自重種目のボリュームが0になります</h3>
@@ -195,7 +198,10 @@
       <tr><td>Elephant</td><td class="num">1,000 kg</td></tr>
       <tr><td>Mammoth</td><td class="num">6,000 kg</td></tr>
     </table>
-    <p>On "Auto", the app picks <b>the largest animal that still makes a herd of two or more</b> (rounded down). The home-screen wall is a decorative mix of all five species — <b>the numbers and captions are always the real count</b>.</p>
+    <p>On "Auto", the volume is decomposed <b>largest animal first, taking as many as it affords</b> (mammoth → elephant → gorilla → sumo → man; remainders are dropped). For example 3,900 kg is 3 elephants · 4 gorillas · 1 man, and 12,400 kg is 1 mammoth · 6 elephants · 2 gorillas.</p>
+    <p><b>A mammoth only appears from 8,000 kg</b> — its reference weight is 6,000 kg, but the app keeps enough weight in reserve so a mammoth never stands alone. The second one arrives at 14,000 kg. Daily and weekly cards cap mammoths at two; anything beyond that is expressed as elephants and below (long-run totals such as lifetime volume carry over with no cap).</p>
+    <p>You can also pin a single species in Settings → Herd animal. Then the count is simply <code>volume ÷ that animal's reference weight</code>.</p>
+    <p>Every animal standing on the home-screen wall was <b>actually earned</b> — it is not decoration. The wall is empty on Monday and grows with every session you log.</p>
 
     <h2>FAQ</h2>
     <h3>My bodyweight exercises show 0 volume</h3>
