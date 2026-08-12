@@ -297,12 +297,13 @@ footer .cr{display:block;margin-top:8px}
   <p class="deck" data-ja="挙げた重さは、ぜんぶ動物になる。ホーム画面に、その週の群れが立つ。"
      data-en="Every kilo you lift turns into an animal. Your home screen carries the week's herd.">挙げた重さは、ぜんぶ動物になる。ホーム画面に、その週の群れが立つ。</p>
 
-  <a class="cta" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+  <a class="cta" data-store href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
      data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
   <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
      data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
-  <p class="fallback">開かない場合は App Store で <b>「MammothFit」</b> を検索。<br>
-    Not opening? Search <b>“MammothFit”</b> on the App Store.</p>
+  <p class="fallback">開かないときは、ブラウザのメニューから <b>「Safari で開く」</b>。<br>
+    または App Store で <b>「MammothFit」</b> を検索。<br>
+    Not opening? Open this page in Safari, or search <b>“MammothFit”</b>.</p>
   <div id="sentinel" style="height:1px"></div>
 
   <div class="bleed strip">
@@ -465,12 +466,13 @@ footer .cr{display:block;margin-top:8px}
     <p class="endline" data-ja="数字を読むな。群れを見ろ。" data-en="Don't read numbers. Look at the herd.">数字を読むな。群れを見ろ。</p>
   </div></div>
 
-  <a class="cta" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+  <a class="cta" data-store href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
      data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
   <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
      data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
-  <p class="fallback">開かない場合は App Store で <b>「MammothFit」</b> を検索。<br>
-    Not opening? Search <b>“MammothFit”</b> on the App Store.</p>
+  <p class="fallback">開かないときは、ブラウザのメニューから <b>「Safari で開く」</b>。<br>
+    または App Store で <b>「MammothFit」</b> を検索。<br>
+    Not opening? Open this page in Safari, or search <b>“MammothFit”</b>.</p>
 
   <footer class="bleed"><div class="m">
     <a href="../" data-ja="サポート" data-en="Support">サポート</a>
@@ -483,7 +485,7 @@ footer .cr{display:block;margin-top:8px}
 <div class="bar" id="bar">
   <span class="mark" aria-hidden="true"></span>
   <span class="wordmark" aria-hidden="true">MAMMOTHFIT</span>
-  <a class="pill" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+  <a class="pill" data-store href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
      data-ja="入手" data-en="Get">入手</a>
 </div>
 
@@ -746,6 +748,34 @@ footer .cr{display:block;margin-top:8px}
       atMaker = es[0].isIntersecting;
       sync();
     }, {threshold:0.3}).observe(maker);
+  }
+
+  /* ---- App Store を確実に開く（Instagram等のアプリ内ブラウザ対策・2026-08-12） ----
+     アプリ内ブラウザ(WKWebView)は https://apps.apple.com への遷移を自前で
+     読み込もうとして白画面/無反応になることがある。iOSでは itms-apps:// は
+     OSが必ずApp Storeアプリに渡すので、そちらを先に試し、開かなかった
+     ときだけ https に落とす。iOS以外は素通し（既定の遷移のまま）。 */
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isIOS){
+    var links = document.querySelectorAll('a[href^="https://apps.apple.com"]');
+    for (var li = 0; li < links.length; li++){
+      links[li].addEventListener('click', function(e){
+        e.preventDefault();
+        var httpsUrl = this.href;
+        var appUrl = httpsUrl.replace(/^https:/, 'itms-apps:');
+        var done = false;
+        var timer = setTimeout(function(){
+          if (!document.hidden && !done){ done = true; window.location.href = httpsUrl; }
+        }, 1200);
+        function onHide(){
+          if (document.hidden){ done = true; clearTimeout(timer);
+            document.removeEventListener('visibilitychange', onHide); }
+        }
+        document.addEventListener('visibilitychange', onHide);
+        window.location.href = appUrl;
+      });
+    }
   }
 })();
 </script>
