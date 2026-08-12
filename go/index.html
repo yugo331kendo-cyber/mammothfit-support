@@ -251,6 +251,28 @@ footer .cr{display:block;margin-top:8px}
   .cta{margin-top:14px}
   .fallback{margin-top:10px}
 }
+/* ---- アプリ内ブラウザ（Instagram等）検知時だけ出す案内 ---- */
+.fb-iab{display:none}
+body.iab .fb-iab{display:inline}
+.rescue{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--panel-2);
+  border-top:1px solid var(--rule-strong);
+  padding:16px 20px calc(18px + env(safe-area-inset-bottom));
+  box-shadow:0 -12px 40px rgba(0,0,0,.5);
+  transform:translateY(110%);transition:transform .26s var(--ease)}
+.rescue:not([hidden]){transform:translateY(0);visibility:visible}
+.rescue[hidden]{display:block !important;transform:translateY(110%);visibility:hidden;pointer-events:none}
+.rescue::before{content:"";position:absolute;top:-1px;left:0;width:24px;height:3px;background:var(--lemon)}
+.rescue-head{display:flex;align-items:flex-start;gap:12px}
+.rescue-head strong{flex:1;font-size:var(--s0);line-height:1.5;color:var(--ink);font-weight:800}
+.rescue-x{appearance:none;background:transparent;border:0;color:var(--muted);font-size:22px;
+  line-height:1;min-width:44px;min-height:44px;margin:-10px -14px 0 0;cursor:pointer}
+.rescue-steps{margin:10px 0 0;padding:0 0 0 1.4em;font-size:var(--s0);line-height:1.9;color:var(--ink-2)}
+.rescue-steps b{color:var(--ink)}
+.rescue-copy{display:block;width:100%;min-height:48px;margin-top:12px;background:transparent;
+  border:1px solid var(--rule-strong);border-radius:3px;color:var(--lemon);font:inherit;
+  font-size:var(--s-1);font-weight:800;cursor:pointer;letter-spacing:.01em}
+.rescue-copy:active{background:var(--lemon-wash)}
+.rescue-copied{margin:8px 0 0;font-size:var(--s-1);color:var(--muted);text-align:center}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
 }
@@ -301,9 +323,10 @@ footer .cr{display:block;margin-top:8px}
      data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
   <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
      data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
-  <p class="fallback">開かないときは、ブラウザのメニューから <b>「Safari で開く」</b>。<br>
-    または App Store で <b>「MammothFit」</b> を検索。<br>
-    Not opening? Open this page in Safari, or search <b>“MammothFit”</b>.</p>
+  <p class="fallback"><span class="fb-iab">アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br>
+    In-app browsers can’t open the App Store — <b>open this page in your browser</b>.<br></span>
+    開かないときは App Store で <b>「MammothFit」</b> を検索。<br>
+    Not opening? Search <b>“MammothFit”</b> on the App Store.</p>
   <div id="sentinel" style="height:1px"></div>
 
   <div class="bleed strip">
@@ -470,9 +493,10 @@ footer .cr{display:block;margin-top:8px}
      data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
   <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
      data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
-  <p class="fallback">開かないときは、ブラウザのメニューから <b>「Safari で開く」</b>。<br>
-    または App Store で <b>「MammothFit」</b> を検索。<br>
-    Not opening? Open this page in Safari, or search <b>“MammothFit”</b>.</p>
+  <p class="fallback"><span class="fb-iab">アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br>
+    In-app browsers can’t open the App Store — <b>open this page in your browser</b>.<br></span>
+    開かないときは App Store で <b>「MammothFit」</b> を検索。<br>
+    Not opening? Search <b>“MammothFit”</b> on the App Store.</p>
 
   <footer class="bleed"><div class="m">
     <a href="../" data-ja="サポート" data-en="Support">サポート</a>
@@ -480,6 +504,20 @@ footer .cr{display:block;margin-top:8px}
     <span class="cr">© 2026 MammothFit　·　<span data-ja="このページの制作" data-en="This page by">このページの制作</span> — you.ri21713@gmail.com</span>
   </div></footer>
 
+</div>
+
+<div class="rescue" id="rescue" tabindex="-1" hidden>
+  <div class="rescue-head">
+    <strong data-ja="このままでは App Store を開けません" data-en="The App Store won’t open in here">このままでは App Store を開けません</strong>
+    <button type="button" class="rescue-x" id="rescue-close" aria-label="閉じる">×</button>
+  </div>
+  <ol class="rescue-steps">
+    <li id="step1" data-html="1" data-ja="ブラウザの <b>メニュー</b> を開く" data-en="Open the browser <b>menu</b>">ブラウザの <b>メニュー</b> を開く</li>
+    <li id="step2" data-html="1" data-ja="<b>「Safari で開く」</b> を選ぶ" data-en="Choose <b>“Open in Safari”</b>">「Safari で開く」 を選ぶ</li>
+    <li data-ja="開き直したページで、もう一度ボタンをタップ" data-en="Tap the button again on the reopened page">開き直したページで、もう一度ボタンをタップ</li>
+  </ol>
+  <button type="button" class="rescue-copy" id="rescue-copy" data-ja="App Store のリンクをコピー" data-en="Copy the App Store link">App Store のリンクをコピー</button>
+  <p class="rescue-copied" id="rescue-copied" hidden data-ja="コピーしました。Safari に貼り付けると開けます" data-en="Copied. Paste it into Safari to open">コピーしました。Safari に貼り付けると開けます</p>
 </div>
 
 <div class="bar" id="bar">
@@ -750,32 +788,115 @@ footer .cr{display:block;margin-top:8px}
     }, {threshold:0.3}).observe(maker);
   }
 
-  /* ---- App Store を確実に開く（Instagram等のアプリ内ブラウザ対策・2026-08-12） ----
-     アプリ内ブラウザ(WKWebView)は https://apps.apple.com への遷移を自前で
-     読み込もうとして白画面/無反応になることがある。iOSでは itms-apps:// は
-     OSが必ずApp Storeアプリに渡すので、そちらを先に試し、開かなかった
-     ときだけ https に落とす。iOS以外は素通し（既定の遷移のまま）。 */
+  /* ---- App Store 導線（アプリ内ブラウザ対策・2026-08-12改三） -------------
+     調査結果（2026-08時点・反証チェック済み）:
+     ・Instagram等のMeta製アプリ内ブラウザ(WKWebView)では、apps.apple.com への
+       遷移も itms-apps:// も App Store に渡らず、白画面か無反応で終わる（確定）
+     ・脱出用スキーム（x-safari-https:// 等）はIG v417以降ブロックされ、
+       文脈次第で「アドレスが無効」エラーを出す＝不確実で逆効果になり得る
+     ・業界の定石は「アプリ内ブラウザを検知して、外部ブラウザで開く手順を案内」
+       （Linktree等の主要ツールもこれ以上のことはしていない）
+     方針:
+     ・通常ブラウザ(Safari等)は一切介入しない＝素のリンクで即 App Store（最も確実）
+     ・アプリ内ブラウザ(iOS)だけ、タップを必ず「動く案内」に着地させる。
+       白画面や無反応・エラーダイアログのような手詰まりは絶対に作らない。 */
   var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  if (isIOS){
-    var links = document.querySelectorAll('a[href^="https://apps.apple.com"]');
-    for (var li = 0; li < links.length; li++){
-      links[li].addEventListener('click', function(e){
+  // Metaは「⋯→外部ブラウザで開く」、LINE等はメニュー文言が違うので host を分ける。
+  // Line は語境界つき（Streamline/ Timeline/ などの誤検知を避ける）。
+  var ua = navigator.userAgent;
+  var isMetaIAB = /Instagram|FBAN|FBAV|FB_IAB|FBIOS/i.test(ua);
+  var isOtherIAB = /(^|[\s;()])Line\/\d/i.test(ua);
+  var forcedIAB = /[?&]iab=1/.test(location.search);
+  var isIAB = isMetaIAB || isOtherIAB || forcedIAB;
+  // App Store が開けないのは iOS のアプリ内ブラウザだけ。Android では案内を出さない。
+  if (isIAB && isIOS) document.body.classList.add('iab');
+  if (isIOS && isIAB){
+    var rescue = document.getElementById('rescue');
+    var rescueClose = document.getElementById('rescue-close');
+    var rescueCopy = document.getElementById('rescue-copy');
+    var rescueCopied = document.getElementById('rescue-copied');
+    var lastUrl = 'https://apps.apple.com/jp/app/mammothfit/id6787899611';
+    var storeLinks = document.querySelectorAll('a[href^="https://apps.apple.com"]');
+    // 出荷時のラベルを控えておく（コピー結果でラベルを書き換えるため、
+    // 開き直すたびに必ず元へ戻す。戻さないと前回の「✓ コピーしました」が
+    // 別アプリのリンクに対して残り、表示が嘘になる）
+    var COPY_JA = rescueCopy.getAttribute('data-ja');
+    var COPY_EN = rescueCopy.getAttribute('data-en');
+    function resetCopyUI(){
+      rescueCopy.setAttribute('data-ja', COPY_JA);
+      rescueCopy.setAttribute('data-en', COPY_EN);
+      rescueCopy.textContent = (lang === 'en') ? COPY_EN : COPY_JA;
+      rescueCopied.hidden = true;
+    }
+    // ホストアプリごとに手順の文言を差し替える（Metaだけ「⋯」の位置を断定できる）
+    if (isMetaIAB){
+      var s1 = document.getElementById('step1'), s2 = document.getElementById('step2');
+      s1.setAttribute('data-ja', '右上の <b>「⋯」</b> をタップ');
+      s1.setAttribute('data-en', 'Tap <b>“⋯”</b> at the top right');
+      s1.innerHTML = s1.getAttribute('data-ja');
+      s2.setAttribute('data-ja', '<b>「外部ブラウザで開く」</b> を選ぶ');
+      s2.setAttribute('data-en', 'Choose <b>“Open in external browser”</b>');
+      s2.innerHTML = s2.getAttribute('data-ja');
+    }
+    function openRescue(url){
+      lastUrl = url;
+      resetCopyUI();
+      rescue.hidden = false;
+      rescue.focus();
+    }
+    for (var li = 0; li < storeLinks.length; li++){
+      storeLinks[li].addEventListener('click', function(e){
         e.preventDefault();
-        var httpsUrl = this.href;
-        var appUrl = httpsUrl.replace(/^https:/, 'itms-apps:');
-        var done = false;
-        var timer = setTimeout(function(){
-          if (!document.hidden && !done){ done = true; window.location.href = httpsUrl; }
-        }, 1200);
-        function onHide(){
-          if (document.hidden){ done = true; clearTimeout(timer);
-            document.removeEventListener('visibilitychange', onHide); }
-        }
-        document.addEventListener('visibilitychange', onHide);
-        window.location.href = appUrl;
+        openRescue(this.href);
       });
     }
+    rescueClose.addEventListener('click', function(){
+      rescue.hidden = true;
+      rescueCopied.hidden = true;
+    });
+    rescueCopy.addEventListener('click', function(){
+      function say(ja, en){
+        // ボタン自身のラベルで結果を返す（指のある場所に反応が出る）
+        rescueCopy.setAttribute('data-ja', ja);
+        rescueCopy.setAttribute('data-en', en);
+        rescueCopy.textContent = (lang === 'en') ? en : ja;
+        rescueCopied.setAttribute('data-ja', 'Safari に貼り付けると開けます');
+        rescueCopied.setAttribute('data-en', 'Paste it into Safari to open');
+        rescueCopied.textContent = (lang === 'en') ? 'Paste it into Safari to open'
+                                                   : 'Safari に貼り付けると開けます';
+      }
+      function ok(){ say('✓ コピーしました', '✓ Copied');
+                     rescueCopied.hidden = false; }
+      function ng(){ say('長押し →「リンクをコピー」でも取れます',
+                         'Long-press the button → “Copy Link”');
+                     rescueCopied.hidden = true; }
+      // iOS Safariはreadonly要素のselect()を無視するので、Rangeで選択してから実行する
+      function legacyCopy(){
+        var ta = document.createElement('textarea');
+        ta.value = lastUrl;
+        ta.contentEditable = 'true';
+        ta.readOnly = false;
+        ta.style.position = 'fixed';
+        ta.style.top = '0';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        var range = document.createRange();
+        range.selectNodeContents(ta);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, 999999);
+        var copied = false;
+        try { copied = document.execCommand('copy'); } catch (err) {}
+        sel.removeAllRanges();
+        document.body.removeChild(ta);
+        copied ? ok() : ng();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(lastUrl).then(ok, legacyCopy);
+      } else { legacyCopy(); }
+    });
   }
 })();
 </script>
