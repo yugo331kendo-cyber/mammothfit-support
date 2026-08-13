@@ -13,56 +13,69 @@
 <meta property="og:url" content="https://yugo331kendo-cyber.github.io/mammothfit-support/go/">
 <style>
 /* ============================================================
-   図版と索引 — 誌面のように組んだ1枚。
-   ・罫は全幅、文字は20pxのガター内（雑誌のグリッド）
-   ・角丸はほぼ廃止（印刷物のボタン=3px、アプリアイコン=12pxのみ）
-   ・レモンの「塗り」は3つだけ: 動物・App Storeボタン・追従バーのボタン
+   構成: 章は下部の固定タブで切り替える（1画面に1章だけ）。
+   組み: 字間と行間を大きく取り、要素を減らし、罫は髪の毛一本。
+   色: 地=黒、文字=白、塗りのレモンは「動物」と「入手ボタン」だけ。
    ============================================================ */
 :root{
   --appicon:url(data:image/webp;base64,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);
-  --bg:#0a0b0c; --plate:#07080a; --panel-2:#0e1013; --panel:#14161a;
-  --rule-hair:#1c2025; --rule:#262b31; --rule-strong:#3a4149;
-  --ink:#e9ecef; --ink-2:#c3c9d0; --muted:#9aa2ab; --muted-2:#7d858e;
-  --lemon:#F2E400; --lemon-dim:#b6ac0a; --lemon-wash:rgba(242,228,0,.06);
-  --rule-accent:rgba(242,228,0,.28);
-  --ease:cubic-bezier(.2,.7,.2,1);
-  /* 1.200の等比スケール（基準15px＝本文の読みサイズ） */
-  --s-2:10.5px; --s-1:12.5px; --s0:15px; --s1:18px; --s2:21.5px; --D1:31px; --D2:37px;
+  --bg:#0a0b0c; --plate:#070809; --panel:#0e1013; --panel-2:#131519;
+  --rule:#1b1f24; --rule-2:#272c33;
+  --ink:#eceff2; --ink-2:#b3bac1; --muted:#828a93;
+  /* 文字に使う最小の灰（#0a0b0c 上で約5:1）。#646c75 は矢印や目盛りなど装飾専用 */
+  --muted-2:#7d858e; --deco:#646c75;
+  --lemon:#F2E400; --lemon-dim:#8d8607; --lemon-wash:rgba(242,228,0,.07);
+  --ease:cubic-bezier(.22,.7,.2,1);
+  --gut:24px; --tabh:58px;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN",system-ui,sans-serif;
-  font-size:var(--s0);line-height:1.85;-webkit-font-smoothing:antialiased;
-  font-variant-numeric:tabular-nums;padding-bottom:76px}
-/* 紙の地。fixed要素で敷く（iOSのbackground-attachment:fixedは不安定） */
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(120% 60% at 50% -10%, #14161a 0%, #0a0b0c 62%)}
+  font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  font-size:15px;line-height:2.2;letter-spacing:.055em;font-weight:400;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  padding-bottom:calc(var(--tabh) + env(safe-area-inset-bottom))}
 [hidden]{display:none !important}
 a{color:var(--lemon)}
+.wrap{max-width:600px;margin-inline:auto;padding-inline:var(--gut)}
 
-/* 全幅の罫 × 20pxガターの本文 */
-.page{display:grid;grid-template-columns:1fr min(560px, 100% - 40px) 1fr}
-.page > *{grid-column:2}
-.page > .bleed{grid-column:1 / -1}
-.bleed > .m{max-width:560px;margin-inline:auto;padding-inline:20px}
+/* ---- 小見出しラベル（字間を大きく開ける） ---- */
+.label{display:block;font-size:10.5px;line-height:1;letter-spacing:.34em;
+  font-weight:600;color:var(--muted);text-transform:uppercase}
+.label-ja{display:block;font-size:11px;line-height:1;letter-spacing:.34em;
+  font-weight:600;color:var(--muted)}
 
-/* ---- 見出し・共通 ---- */
-.label{font-size:var(--s-2);line-height:1;letter-spacing:.22em;font-weight:800;
-  color:var(--muted);text-transform:uppercase}
-.kicker{font-size:var(--s-2);letter-spacing:.22em;font-weight:800;color:var(--muted);
-  margin:26px 0 12px}
-h1{font-size:var(--D1);line-height:1.12;letter-spacing:-.025em;font-weight:900;
-  margin:0 0 14px;color:var(--ink);text-indent:-.04em}
-.deck{font-size:var(--s0);line-height:1.85;color:var(--ink-2);margin:16px 0 0}
+/* ---- 冠 ---- */
+header{position:relative;z-index:5;background:var(--bg);border-bottom:1px solid var(--rule)}
+.head{display:flex;align-items:center;gap:14px;height:64px}
+.mark{width:34px;height:34px;flex:0 0 auto;background:var(--appicon) center/cover no-repeat;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}
+.wordmark{font-size:12px;line-height:1.55;letter-spacing:.3em;font-weight:600;color:var(--ink)}
+.lang{margin-left:auto;appearance:none;background:transparent;border:0;cursor:pointer;
+  font:inherit;font-size:11px;letter-spacing:.18em;font-weight:600;color:var(--muted);
+  min-height:44px;min-width:44px;padding:0 4px;-webkit-tap-highlight-color:transparent}
+.lang:active{color:var(--ink)}
+.lang:focus-visible{outline:2px solid var(--lemon);outline-offset:2px}
+.get{flex:0 0 auto;display:inline-flex;align-items:center;height:44px;padding:0 18px;
+  background:var(--lemon);color:#000;text-decoration:none;
+  font-size:12.5px;letter-spacing:.14em;font-weight:600;
+  -webkit-tap-highlight-color:transparent}
+.get:active{opacity:.85}
 
-/* ---- 図版（プレート） ---- */
-.plate{position:relative;background:var(--plate);margin-top:18px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
-.stage{position:relative;width:100%;aspect-ratio:8/5;overflow:hidden}
-/* 網点風スクリーン（画像なし・約90バイト） */
-.stage::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 1px, transparent 1px 3px)}
+/* ---- 章 ---- */
+.chapter{animation:fade .32s var(--ease)}
+.chapter:focus{outline:none}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.chapter > .wrap{padding-block:34px 56px}
+.ch-head{margin-bottom:26px}
+.ch-head .label-ja{margin-bottom:16px}
+h1{font-size:29px;line-height:1.62;letter-spacing:.03em;font-weight:600;margin:0;color:var(--ink)}
+h2{font-size:21px;line-height:1.75;letter-spacing:.06em;font-weight:600;margin:0;color:var(--ink)}
+.lead{margin:20px 0 0;color:var(--ink-2);font-size:15px;line-height:2.3}
+
+/* ---- 図版（群れ） ---- */
+.plate{position:relative;background:var(--plate);margin-inline:calc(var(--gut) * -1)}
+.stage{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden}
 .beast{display:none}
 @supports ((-webkit-mask-image:none) or (mask-image:none)){
   .beast{display:block;position:absolute}
@@ -71,7 +84,7 @@ h1{font-size:var(--D1);line-height:1.12;letter-spacing:-.025em;font-weight:900;
     -webkit-mask-size:contain;mask-size:contain;
     -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
     -webkit-mask-position:center;mask-position:center}
-  /* アプリと同じ1.13倍の黒アウトライン＝密でも一体ずつ数えられる */
+  /* アプリと同じ黒フチ＝密集しても一体ずつ数えられる */
   .beast::before{inset:-6.5%;background:var(--plate)}
   .beast::after{inset:0;background:var(--lemon)}
   .beast.flip{transform:scaleX(-1)}
@@ -81,260 +94,300 @@ h1{font-size:var(--D1);line-height:1.12;letter-spacing:-.025em;font-weight:900;
 .b-gorilla{aspect-ratio:.9638;--m:url(data:image/png;base64,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)}
 .b-elephant{aspect-ratio:1.3739;--m:url(data:image/png;base64,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)}
 .b-mammoth{aspect-ratio:1.4344;--m:url(data:image/png;base64,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)}
-/* 図版番号（箱もピルも使わない） */
-.plate-label{position:absolute;top:12px;left:20px;right:20px;z-index:2;
-  display:flex;align-items:center;gap:8px;font-size:var(--s-2);letter-spacing:.22em;
-  font-weight:800;color:var(--muted)}
-.plate-label i{display:block;width:12px;height:1px;background:var(--lemon);flex:0 0 auto}
-/* 実測用の罫（数字と内訳）。この矩形は配置アルゴリズムの立入禁止領域になる */
-.measure{position:relative;z-index:2;display:grid;grid-template-columns:auto 1fr;
-  border-top:1px solid var(--rule);background:rgba(7,8,10,.94)}
-.measure .cellA{padding:9px 16px 10px 20px;border-right:1px solid var(--rule-hair);
-  display:flex;align-items:baseline;gap:.18em;white-space:nowrap}
-.measure .cellB{padding:9px 20px 10px 16px;display:flex;align-items:center;
-  font-size:var(--s-1);color:var(--lemon);letter-spacing:.02em;min-width:0}
-.measure .cellB span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fig{font-size:var(--D2);line-height:1;font-weight:900;color:var(--lemon)}
-.unit{font-size:var(--s0);font-weight:700;color:var(--muted);line-height:1}
+.plate-cap{position:absolute;top:18px;left:var(--gut);z-index:2;
+  font-size:10.5px;letter-spacing:.3em;font-weight:600;color:var(--muted-2)}
+/* 数字は図版の下に置く（群れと重ねない） */
+.readout{display:flex;align-items:baseline;justify-content:center;gap:.2em;
+  padding:26px 0 6px}
+.fig{font-size:46px;line-height:1;font-weight:600;letter-spacing:.01em;color:var(--lemon)}
+.unit{font-size:15px;font-weight:600;color:var(--muted);line-height:1}
+.breakdown{text-align:center;font-size:12.5px;letter-spacing:.14em;color:var(--muted);
+  line-height:2;margin:0}
 
-/* ---- CTA ---- */
-.cta{display:block;width:100%;min-height:56px;padding:18px 20px 17px;background:var(--lemon);
-  color:#000;text-decoration:none;font-size:17px;font-weight:850;text-align:center;
-  border-radius:3px;margin:24px 0 10px;letter-spacing:.01em;
-  touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.cta:active{opacity:.86;transform:translateY(1px)}
-.meta{font-size:var(--s-1);color:var(--muted);text-align:center;margin:0}
-.fallback{margin:12px 0 0;font-size:var(--s-1);line-height:1.6;color:var(--muted);text-align:center}
-.fallback b{color:var(--ink);font-weight:700}
-
-/* ---- 操作帯（開いたまま） ---- */
-.strip{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
-  background:var(--panel-2);margin-top:28px}
-.strip .m{padding-block:14px 16px}
-.strip .head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.strip .head .l{font-size:var(--s-2);letter-spacing:.22em;font-weight:800;color:var(--muted)}
-.strip .head .r{font-size:var(--s1);font-weight:800;color:var(--lemon)}
-.track{position:relative;margin-top:2px}
+/* ---- スライダー ---- */
+.control{margin-top:30px;padding-top:26px;border-top:1px solid var(--rule)}
+.control .cap{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  margin-bottom:4px}
+.control .cap .r{font-size:13px;letter-spacing:.1em;color:var(--ink-2)}
+.track{position:relative}
 input[type=range]{width:100%;height:44px;-webkit-appearance:none;appearance:none;
   background:transparent;touch-action:pan-y;margin:0;display:block}
-input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--rule-strong)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;
-  background:var(--lemon);border:0;border-radius:0;margin-top:-11px;
-  clip-path:polygon(50% 0,100% 100%,0 100%)}
-input[type=range]::-moz-range-track{height:2px;background:var(--rule-strong)}
-input[type=range]::-moz-range-thumb{width:24px;height:24px;background:var(--lemon);
-  border:0;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)}
+input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--rule-2)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;
+  border-radius:50%;background:var(--lemon);border:0;margin-top:-8px}
+input[type=range]::-moz-range-track{height:1px;background:var(--rule-2)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
+  background:var(--lemon);border:0}
 input[type=range]:focus-visible{outline:2px solid var(--lemon);outline-offset:4px}
-.tick{position:absolute;top:31px;left:0;width:0;pointer-events:none}
-.tick i{display:block;width:1px;height:8px;background:var(--lemon-dim);margin:0}
-.tick > span{display:block;width:max-content;font-size:var(--s-2);letter-spacing:.1em;
-  color:var(--muted-2);transform:translateX(-50%);white-space:nowrap;margin-top:3px}
+.tick{position:absolute;top:30px;left:0;width:0;pointer-events:none}
+.tick i{display:block;width:1px;height:6px;background:var(--lemon-dim)}
+.tick > span{display:block;width:max-content;font-size:10.5px;letter-spacing:.18em;
+  color:var(--muted-2);transform:translateX(-50%);white-space:nowrap;margin-top:6px}
 .tick > span span{display:inline}
 
-/* ---- 索引（見出し罫＋開閉行） ---- */
-.sec-rule{border-top:1px solid var(--rule-accent);margin-top:36px;position:relative}
-.sec-rule::before{content:"";position:absolute;top:-1px;left:0;width:24px;height:3px;background:var(--lemon)}
-.sec-rule .m{padding-block:10px 0}
-details{border-bottom:1px solid var(--rule)}
-details:first-of-type{border-top:1px solid var(--rule)}
-summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
-summary::-webkit-details-marker{display:none}
-.row{display:grid;grid-template-columns:auto 1fr auto;gap:0 14px;align-items:start;
-  padding:16px 0 15px;min-height:64px}
-.row .no{font-size:var(--s-2);letter-spacing:.06em;font-weight:800;color:var(--muted-2);
-  margin-left:-1px;padding-top:5px;transition:color .18s var(--ease)}
-details[open] .row .no{color:var(--lemon)}
-.row .ttl{font-size:var(--s1);line-height:1.35;font-weight:800;color:var(--ink)}
-.row .sub{font-size:var(--s-1);line-height:1.6;color:var(--muted);margin-top:3px}
-.row .pm{position:relative;width:14px;height:14px;margin-top:8px;flex:0 0 auto}
-.row .pm::before,.row .pm::after{content:"";position:absolute;background:var(--lemon)}
-.row .pm::before{left:0;right:0;top:6.5px;height:1px}
-.row .pm::after{top:0;bottom:0;left:6.5px;width:1px;transition:transform .28s var(--ease)}
-details[open] .row .pm::after{transform:scaleY(0)}
-summary:active .row{background:var(--lemon-wash)}
-.panel{overflow:hidden;background:var(--panel);border-top:1px solid var(--rule-hair)}
-.panel .inner{padding:6px 0 20px}
-@supports (grid-template-rows: 0fr){
-  details .panel{display:grid;grid-template-rows:0fr;opacity:0;
-    transition:grid-template-rows .28s var(--ease), opacity .2s var(--ease)}
-  details .panel > .innerwrap{min-height:0;overflow:hidden}
-  details[open] .panel{grid-template-rows:1fr;opacity:1}
-}
-.panel dl{margin:0}
-.panel .kv{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule-hair)}
-.panel .kv:last-of-type{border-bottom:0}
-.panel .kv .g{flex:0 0 auto;height:18px;align-self:center}
+/* ---- 入手 ---- */
+.cta{display:block;width:100%;min-height:58px;line-height:58px;background:var(--lemon);
+  color:#000;text-decoration:none;font-size:16px;font-weight:600;letter-spacing:.1em;
+  text-align:center;margin-top:36px;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cta:active{opacity:.85}
+.meta{margin:14px 0 0;font-size:12px;letter-spacing:.1em;color:var(--muted);text-align:center;
+  line-height:2}
+.fallback{margin:10px 0 0;font-size:12px;line-height:2;letter-spacing:.06em;
+  color:var(--muted-2);text-align:center}
+.fallback b{color:var(--ink-2);font-weight:600}
+
+/* ---- 次の章へ促す ---- */
+.more{display:flex;flex-direction:column;align-items:center;gap:10px;
+  margin:46px auto 0;padding:8px 16px 4px;min-height:44px;
+  background:transparent;border:0;cursor:pointer;color:var(--muted);
+  font:inherit;font-size:10.5px;letter-spacing:.3em;font-weight:600;
+  -webkit-tap-highlight-color:transparent}
+.more svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.1;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.more:active{color:var(--ink)}
+.more:focus-visible{outline:2px solid var(--lemon);outline-offset:4px}
+
+/* ---- 定義リスト（換算） ---- */
+.scale{margin:0;padding:0}
+.scale .row{display:flex;align-items:center;gap:14px;padding:17px 0;
+  border-bottom:1px solid var(--rule)}
+.scale .row:last-child{border-bottom:0}
+.scale .g{flex:0 0 auto;height:20px}
 @supports ((-webkit-mask-image:none) or (mask-image:none)){
-  .panel .kv .g{background:var(--lemon-dim);
+  .scale .g{background:var(--lemon-dim);
     -webkit-mask-image:var(--m);mask-image:var(--m);
     -webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-    -webkit-mask-position:center;mask-position:center}
+    -webkit-mask-position:center bottom;mask-position:center bottom}
 }
-.panel .kv dt{font-size:var(--s0);color:var(--ink)}
-.panel .kv .leader{flex:1;border-bottom:1px dotted var(--rule);margin-bottom:.32em}
-.panel .kv dd{margin:0 0 0 auto;font-size:var(--s0);font-weight:800;color:var(--ink);
-  text-align:right;min-width:6ch}
-.panel .kv.mm dd{color:var(--lemon)}
-.panel p{margin:12px 0 0;font-size:var(--s-1);line-height:1.75;color:var(--muted)}
-.panel p b{color:var(--ink);font-weight:700}
-.panel .lead-in{font-size:var(--s0);font-weight:800;color:var(--ink);margin:18px 0 0}
-.panel .lead-in + p{margin-top:2px;font-size:var(--s0);line-height:1.85;color:var(--ink-2)}
-.panel .lead-in:first-child{margin-top:6px}
-.panel .rules{margin:0;padding:0;list-style:none}
-.panel .rules li{padding:9px 0;border-bottom:1px solid var(--rule-hair);
-  font-size:var(--s0);line-height:1.75;color:var(--ink-2)}
-.panel .rules li:last-child{border-bottom:0}
-.app{display:flex;align-items:center;gap:14px;padding:14px 0;text-decoration:none;color:inherit;
-  border-bottom:1px solid var(--rule-hair)}
+.scale dt{font-size:14px;letter-spacing:.12em;color:var(--ink)}
+.scale dd{margin:0 0 0 auto;font-size:14px;letter-spacing:.06em;color:var(--ink-2)}
+.scale .row.mm dd{color:var(--lemon)}
+.note{margin:24px 0 0;font-size:12.5px;line-height:2.15;letter-spacing:.05em;color:var(--muted)}
+.note b{color:var(--ink-2);font-weight:600}
+
+/* ---- 機能（細い線画つき） ---- */
+.feat{display:flex;gap:18px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.feat:last-of-type{border-bottom:0}
+.feat svg{flex:0 0 auto;width:30px;height:30px;margin-top:6px;
+  stroke:var(--lemon);stroke-width:1.1;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.feat .b{min-width:0}
+.feat h3{margin:0;font-size:15px;line-height:1.9;letter-spacing:.12em;font-weight:600;color:var(--ink)}
+.feat p{margin:4px 0 0;font-size:13px;line-height:2.1;letter-spacing:.05em;color:var(--muted)}
+
+/* ---- 箇条（前提） ---- */
+.facts{margin:0;padding:0;list-style:none}
+.facts li{position:relative;padding:19px 0 19px 26px;border-bottom:1px solid var(--rule);
+  font-size:14px;line-height:2.1;letter-spacing:.06em;color:var(--ink-2)}
+.facts li:last-child{border-bottom:0}
+.facts li::before{content:"";position:absolute;left:0;top:calc(19px + 1.05em - 3px);
+  width:6px;height:6px;background:var(--lemon)}
+
+/* ---- ほかのアプリ ---- */
+.app{display:flex;align-items:center;gap:16px;padding:20px 0;text-decoration:none;color:inherit;
+  border-bottom:1px solid var(--rule)}
 .app:last-of-type{border-bottom:0}
-.app .ico{width:50px;height:50px;border-radius:12px;flex:0 0 auto;background-size:cover;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.app .body{flex:1;min-width:0}
-.app .n{font-size:var(--s0);font-weight:800;color:var(--ink)}
-.app .d{font-size:var(--s-1);color:var(--muted);line-height:1.6}
-.app .go{flex:0 0 auto;font-size:var(--s-2);letter-spacing:.1em;color:var(--muted-2)}
-.quote{border-left:2px solid var(--lemon);padding:2px 0 2px 14px;margin:18px 0 0}
-.quote p{margin:0 0 8px;font-size:var(--s-1);line-height:1.8;color:var(--ink-2)}
-.quote p:last-child{margin-bottom:0}
-.offer{margin-top:22px;padding-top:16px;border-top:1px solid var(--rule)}
-.offer h3{font-size:var(--s2);font-weight:800;color:var(--ink);margin:0;line-height:1.3}
-.offer p{margin-top:6px;color:var(--ink-2);font-size:var(--s-1)}
-.mail{display:block;min-height:52px;line-height:50px;text-align:center;background:transparent;
-  border:1px solid var(--rule-strong);border-radius:3px;color:var(--lemon);font-size:var(--s0);
-  font-weight:800;margin-top:14px;text-decoration:none;letter-spacing:.01em}
+.app .ico{width:54px;height:54px;border-radius:13px;flex:0 0 auto;background-size:cover;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}
+.app .b{flex:1;min-width:0}
+.app .n{display:block;font-size:14px;letter-spacing:.12em;font-weight:600;color:var(--ink)}
+.app .d{display:block;font-size:12.5px;letter-spacing:.05em;color:var(--muted);line-height:1.95}
+.app .go{flex:0 0 auto;color:var(--deco);font-size:15px}
+
+/* ---- 受託 ---- */
+.offer{margin-top:34px;padding-top:30px;border-top:1px solid var(--rule)}
+.mail{display:block;min-height:56px;line-height:54px;text-align:center;
+  border:1px solid var(--rule-2);color:var(--lemon);font-size:14px;font-weight:600;
+  letter-spacing:.08em;margin-top:22px;text-decoration:none}
 .mail:active{background:var(--lemon-wash)}
+.endline{margin:44px 0 0;font-size:17px;line-height:2;letter-spacing:.16em;font-weight:600;
+  color:var(--ink);text-align:center}
 
-/* ---- 結び ---- */
-.endmark{border-top:1px solid var(--rule-accent);margin-top:40px;position:relative}
-.endmark::before{content:"";position:absolute;top:-1px;left:0;width:24px;height:3px;background:var(--lemon)}
-.endmark .m{padding-block:26px 8px}
-.endline{font-size:var(--s2);font-weight:900;line-height:1.35;color:var(--ink);margin:0;
-  letter-spacing:-.005em}
-footer{border-top:1px solid var(--rule);margin-top:34px}
-footer .m{padding-block:18px 30px;font-size:var(--s-1);color:var(--muted-2)}
-footer a{color:var(--muted);text-decoration:none;margin-right:18px}
-footer .cr{display:block;margin-top:8px}
+footer{border-top:1px solid var(--rule);margin-top:8px}
+footer .wrap{padding-block:26px 34px;font-size:11.5px;letter-spacing:.08em;color:var(--muted-2);
+  line-height:2.2;text-align:center}
+footer a{color:var(--muted);text-decoration:none;display:inline-block;padding:8px 10px}
+footer .cr{display:block;margin-top:10px}
 
-/* ---- 言語切替（セグメントではなく文字） ---- */
-.lang{margin-left:auto;display:flex;align-items:center;gap:8px}
-.lang button{appearance:none;background:transparent;border:0;padding:0 2px;cursor:pointer;
-  font:inherit;font-size:var(--s-1);font-weight:800;color:var(--muted-2);
-  min-height:44px;min-width:44px;border-bottom:2px solid transparent}
-.lang button.on{color:var(--lemon);border-bottom-color:var(--lemon)}
-.lang button:focus-visible{outline:2px solid var(--lemon);outline-offset:2px}
-.lang .sep{color:var(--rule-strong);font-size:var(--s-1)}
+/* ---- 下部固定タブ ---- */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(10,11,12,.96);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-top:1px solid var(--rule);
+  padding-bottom:env(safe-area-inset-bottom)}
+.tabs .in{display:flex;max-width:600px;margin-inline:auto;padding-inline:8px}
+.tabs button{flex:1;appearance:none;background:transparent;border:0;cursor:pointer;font:inherit;
+  height:var(--tabh);padding:0 2px;color:var(--muted-2);
+  font-size:11.5px;letter-spacing:.1em;font-weight:600;position:relative;
+  -webkit-tap-highlight-color:transparent}
+.tabs button::after{content:"";position:absolute;left:50%;right:50%;bottom:11px;height:1px;
+  background:var(--lemon);transition:left .24s var(--ease), right .24s var(--ease)}
+.tabs button[aria-selected="true"]{color:var(--ink)}
+.tabs button[aria-selected="true"]::after{left:18%;right:18%}
+.tabs button:focus-visible{outline:2px solid var(--lemon);outline-offset:-4px}
 
-/* ---- 追従バー ---- */
-.masthead{display:flex;align-items:center;gap:12px;height:56px;border-bottom:1px solid var(--rule-strong)}
-.mark{width:26px;height:26px;border-radius:6px;flex:0 0 auto;
-  background:var(--appicon) center/cover no-repeat;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.wordmark{font-size:13px;font-weight:900;letter-spacing:.14em;color:var(--ink)}
-.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--panel-2);
-  border-top:1px solid var(--rule);padding:9px 20px calc(9px + env(safe-area-inset-bottom));
-  display:flex;align-items:center;gap:10px;transform:translateY(120%);
-  transition:transform .22s var(--ease);visibility:hidden}
-.bar.show{transform:translateY(0);visibility:visible}
-.bar .wordmark{font-size:12px}
-.bar .pill{margin-left:auto;background:var(--lemon);color:#000;font-weight:850;font-size:15px;
-  min-height:44px;padding:0 20px;border-radius:3px;display:inline-flex;align-items:center;
-  text-decoration:none;-webkit-tap-highlight-color:transparent}
+/* ---- ホームの3点（ユーザーの得） ---- */
+.points{margin-top:30px;padding-top:8px;border-top:1px solid var(--rule)}
+.pt{display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.pt:last-child{border-bottom:0}
+.pt svg{flex:0 0 auto;width:24px;height:24px;margin-top:11px;stroke:var(--lemon);stroke-width:1.1;
+  fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.pt p{margin:0;font-size:14px;line-height:2.1;letter-spacing:.06em;color:var(--ink)}
 
-@media (min-height:800px){
-  :root{--D1:37px;--D2:45px}
-}
-@media (max-height:700px){
-  :root{--D1:27px;--D2:31px}
-  .stage{aspect-ratio:2/1}
-  .kicker{margin-top:18px}
-  /* 667pt機で「検索してください」の2行目まで折りたたみ上に収める */
-  .deck{margin-top:12px}
-  .cta{margin-top:14px}
-  .fallback{margin-top:10px}
-}
-/* ---- アプリ内ブラウザ（Instagram等）検知時だけ出す案内 ---- */
+/* ---- 手順 ---- */
+.steps{margin:0;padding:0;list-style:none;counter-reset:none}
+.steps > li{display:flex;gap:16px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.steps > li:last-child{border-bottom:0}
+.steps .n{flex:0 0 auto;width:26px;padding-top:5px;font-size:10.5px;letter-spacing:.14em;
+  font-weight:600;color:var(--lemon)}
+.steps .s{min-width:0}
+.steps h3{margin:0;font-size:16px;line-height:1.9;letter-spacing:.1em;font-weight:600;color:var(--ink)}
+.steps p{margin:8px 0 0;font-size:14px;line-height:2.15;letter-spacing:.05em;color:var(--ink-2)}
+.steps p.sub{margin-top:10px;padding-top:10px;border-top:1px solid var(--rule);
+  font-size:12.5px;line-height:2;color:var(--muted)}
+
+/* ---- えらぶ理由 ---- */
+.reasons{margin:0;padding:0;list-style:none}
+.reasons > li{padding:24px 0;border-bottom:1px solid var(--rule)}
+.reasons > li:last-child{border-bottom:0}
+.reasons h3{margin:0;font-size:15.5px;line-height:1.95;letter-spacing:.1em;font-weight:600;color:var(--ink);
+  position:relative;padding-left:18px}
+.reasons h3::before{content:"";position:absolute;left:0;top:calc(.97em - 3px);
+  width:6px;height:6px;background:var(--lemon)}
+.reasons p{margin:6px 0 0 18px;font-size:13.5px;line-height:2.1;letter-spacing:.05em;color:var(--muted)}
+
+/* ---- Q&A ---- */
+.qa{margin:0}
+.qa .q{padding:24px 0;border-bottom:1px solid var(--rule)}
+.qa .q:last-child{border-bottom:0}
+.qa dt{font-size:15px;line-height:1.95;letter-spacing:.09em;font-weight:600;color:var(--ink)}
+.qa dd{margin:10px 0 0;font-size:13.5px;line-height:2.15;letter-spacing:.05em;color:var(--ink-2)}
+.qa dd b{color:var(--ink);font-weight:600}
+
+/* ---- つくった人 ---- */
+.body{margin:22px 0 0;font-size:14.5px;line-height:2.25;letter-spacing:.055em;color:var(--ink-2)}
+.sub-lead{margin:10px 0 0;font-size:13px;line-height:2;letter-spacing:.05em;color:var(--muted)}
+.bio{margin-top:38px;padding-top:26px;border-top:1px solid var(--rule)}
+.tl{margin:18px 0 0}
+.tl > div{display:flex;gap:18px;padding:13px 0;border-bottom:1px solid var(--rule)}
+.tl > div:last-child{border-bottom:0}
+.tl dt{flex:0 0 58px;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--lemon);
+  padding-top:.15em}
+.tl dd{margin:0;font-size:14px;line-height:2;letter-spacing:.05em;color:var(--ink-2)}
+.apps{margin-top:18px}
+.link-row{display:flex;align-items:center;gap:16px;padding:18px 0;text-decoration:none;color:inherit}
+.link-row svg{flex:0 0 auto;width:26px;height:26px;stroke:var(--lemon);stroke-width:1.1;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.link-row .b{flex:1;min-width:0}
+.link-row .n{display:block;font-size:14px;letter-spacing:.08em;font-weight:600;color:var(--ink)}
+.link-row .d{display:block;font-size:12.5px;letter-spacing:.05em;color:var(--muted);line-height:1.95}
+.link-row .go{flex:0 0 auto;color:var(--deco);font-size:15px}
+
+/* ---- アプリ内ブラウザ向けの案内 ---- */
 .fb-iab{display:none}
 body.iab .fb-iab{display:inline}
-.rescue{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--panel-2);
-  border-top:1px solid var(--rule-strong);
-  padding:16px 20px calc(18px + env(safe-area-inset-bottom));
-  box-shadow:0 -12px 40px rgba(0,0,0,.5);
-  transform:translateY(110%);transition:transform .26s var(--ease)}
-.rescue:not([hidden]){transform:translateY(0);visibility:visible}
-.rescue[hidden]{display:block !important;transform:translateY(110%);visibility:hidden;pointer-events:none}
-.rescue::before{content:"";position:absolute;top:-1px;left:0;width:24px;height:3px;background:var(--lemon)}
-.rescue-head{display:flex;align-items:flex-start;gap:12px}
-.rescue-head strong{flex:1;font-size:var(--s0);line-height:1.5;color:var(--ink);font-weight:800}
-.rescue-x{appearance:none;background:transparent;border:0;color:var(--muted);font-size:22px;
-  line-height:1;min-width:44px;min-height:44px;margin:-10px -14px 0 0;cursor:pointer}
-.rescue-steps{margin:10px 0 0;padding:0 0 0 1.4em;font-size:var(--s0);line-height:1.9;color:var(--ink-2)}
-.rescue-steps b{color:var(--ink)}
-.rescue-copy{display:block;width:100%;min-height:48px;margin-top:12px;background:transparent;
-  border:1px solid var(--rule-strong);border-radius:3px;color:var(--lemon);font:inherit;
-  font-size:var(--s-1);font-weight:800;cursor:pointer;letter-spacing:.01em}
+.rescue{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--panel-2);
+  border-top:1px solid var(--rule-2);
+  padding:22px var(--gut) calc(24px + env(safe-area-inset-bottom));
+  box-shadow:0 -14px 44px rgba(0,0,0,.55);
+  transform:translateY(110%);visibility:hidden;pointer-events:none;
+  transition:transform .28s var(--ease), visibility .28s var(--ease)}
+.rescue:not([hidden]){transform:translateY(0);visibility:visible;pointer-events:auto}
+.rescue-head{display:flex;align-items:flex-start;gap:14px}
+.rescue-head strong{flex:1;font-size:14.5px;line-height:1.9;letter-spacing:.08em;
+  font-weight:600;color:var(--ink)}
+.rescue-x{appearance:none;background:transparent;border:0;color:var(--muted);font-size:20px;
+  line-height:1;min-width:44px;min-height:44px;margin:-12px -14px 0 0;cursor:pointer}
+.rescue ol{margin:12px 0 0;padding-left:1.5em}
+.rescue li{font-size:13.5px;line-height:2.15;letter-spacing:.05em;color:var(--ink-2)}
+.rescue li b{color:var(--ink);font-weight:600}
+.rescue-copy{display:block;width:100%;min-height:50px;margin-top:18px;background:transparent;
+  border:1px solid var(--rule-2);color:var(--lemon);font:inherit;font-size:13px;
+  letter-spacing:.08em;font-weight:600;cursor:pointer}
 .rescue-copy:active{background:var(--lemon-wash)}
-.rescue-copied{margin:8px 0 0;font-size:var(--s-1);color:var(--muted);text-align:center}
+.rescue-copied{margin:10px 0 0;font-size:12px;letter-spacing:.06em;color:var(--muted);
+  text-align:center}
+
+@media (max-width:359px){
+  :root{--gut:18px} h1{font-size:25px} .fig{font-size:38px}
+  /* 5つのタブが入り切らない幅だけ、タブの文字を詰める */
+  .tabs button{font-size:10.5px;letter-spacing:.04em}
+}
+@media (min-width:600px){ :root{--gut:32px} h1{font-size:33px} }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
 }
 </style>
 </head>
 <body>
-<div class="page">
 
-  <header class="masthead">
+<header>
+  <div class="wrap head">
     <span class="mark" aria-hidden="true"></span>
-    <span class="wordmark">MAMMOTHFIT</span>
-    <span class="lang" role="group" aria-label="Language">
-      <button type="button" id="btn-ja" class="on" aria-pressed="true">日本語</button>
-      <span class="sep" aria-hidden="true">/</span>
-      <button type="button" id="btn-en" aria-pressed="false">EN</button>
-    </span>
-  </header>
+    <span class="wordmark">MAMMOTH<br>FIT</span>
+    <button type="button" class="lang" id="btn-lang" aria-label="Switch to English">EN</button>
+    <a class="get" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+       data-ja="入手" data-en="Get">入手</a>
+  </div>
+</header>
 
-  <p class="kicker" data-ja="筋トレ記録 · iPhone" data-en="TRAINING LOG · IPHONE">筋トレ記録 · iPhone</p>
-  <h1 data-ja="1キロが、<br>群れになる。" data-en="A kilo becomes<br>a herd." data-html="1">1キロが、<br>群れになる。</h1>
+<main>
 
-  <div class="bleed plate">
-    <div class="stage" id="stage">
-      <span class="plate-label"><i aria-hidden="true"></i><span
-        data-ja="例 — 1週間で動かした重さ" data-en="EXAMPLE — WEIGHT MOVED IN ONE WEEK">例 — 1週間で動かした重さ</span></span>
-      <div id="herd" aria-hidden="true">
-<i class="beast b-mammoth flip" style="left:74.67%;top:7.10%;width:28.38%"></i>
-<i class="beast b-elephant" style="left:5.10%;top:16.90%;width:22.62%"></i>
-<i class="beast b-elephant" style="left:41.28%;top:22.66%;width:23.40%"></i>
-<i class="beast b-elephant" style="left:66.38%;top:32.08%;width:23.61%"></i>
-<i class="beast b-elephant" style="left:16.70%;top:36.53%;width:23.33%"></i>
-<i class="beast b-elephant flip" style="left:-2.57%;top:40.48%;width:25.28%"></i>
-<i class="beast b-elephant flip" style="left:48.24%;top:48.49%;width:27.14%"></i>
-<i class="beast b-gorilla flip" style="left:86.70%;top:62.80%;width:14.70%"></i>
-<i class="beast b-gorilla flip" style="left:29.28%;top:65.98%;width:16.12%"></i>
+<!-- ============ 01 これはなに ============ -->
+<section class="chapter" id="p-what" role="tabpanel" tabindex="-1" aria-labelledby="t-what">
+  <div class="wrap">
+    <div class="ch-head">
+      <span class="label-ja" data-ja="筋トレ記録 · iPhone" data-en="TRAINING LOG · IPHONE">筋トレ記録 · iPhone</span>
+      <h1 data-html="1" data-ja="1キロが、<br>群れになる。" data-en="A kilo becomes<br>a herd.">1キロが、<br>群れになる。</h1>
+    </div>
+
+    <div class="plate">
+      <div class="stage" id="stage">
+        <span class="plate-cap" data-ja="例 — 1週間で動かした重さ" data-en="EXAMPLE — ONE WEEK">例 — 1週間で動かした重さ</span>
+        <div id="herd" aria-hidden="true">
+        <i class="beast b-mammoth flip" style="left:72.81%;top:7.38%;width:30.56%"></i>
+        <i class="beast b-elephant" style="left:4.73%;top:16.75%;width:24.36%"></i>
+        <i class="beast b-elephant" style="left:40.34%;top:22.96%;width:25.20%"></i>
+        <i class="beast b-elephant" style="left:67.59%;top:32.92%;width:25.43%"></i>
+        <i class="beast b-elephant" style="left:20.95%;top:37.56%;width:25.13%"></i>
+        <i class="beast b-elephant flip" style="left:-2.85%;top:42.08%;width:27.22%"></i>
+        <i class="beast b-elephant flip" style="left:46.97%;top:50.86%;width:29.23%"></i>
+        <i class="beast b-gorilla flip" style="left:85.74%;top:64.86%;width:15.83%"></i>
+        <i class="beast b-gorilla flip" style="left:19.56%;top:68.59%;width:17.36%"></i>
+        </div>
       </div>
     </div>
-    <div class="measure">
-      <div class="cellA"><span class="fig" id="fig">12.4</span><span class="unit" id="unit">t</span></div>
-      <div class="cellB"><span id="cap">≈ マンモス1 · ゾウ6 · ゴリラ2</span></div>
+
+    <div class="readout">
+      <span class="fig" id="fig">12.4</span><span class="unit" id="unit">t</span>
     </div>
-  </div>
+    <p class="breakdown" id="cap">マンモス1 · ゾウ6 · ゴリラ2</p>
 
-  <p class="deck" data-ja="挙げた重さは、ぜんぶ動物になる。ホーム画面に、その週の群れが立つ。"
-     data-en="Every kilo you lift turns into an animal. Your home screen carries the week's herd.">挙げた重さは、ぜんぶ動物になる。ホーム画面に、その週の群れが立つ。</p>
+    <p class="lead" data-ja="今週やった分だけ、動物が増える。数字を読み解かなくても、やれた週かどうかは群れを見れば分かる。"
+       data-en="The more you did this week, the more animals show up. No spreadsheet to decode — one look at the herd tells you how the week went.">今週やった分だけ、動物が増える。数字を読み解かなくても、やれた週かどうかは群れを見れば分かる。</p>
 
-  <a class="cta" data-store href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
-     data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
-  <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
-     data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
-  <p class="fallback"><span class="fb-iab" data-html="1"
-      data-ja="アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br>"
-      data-en="In-app browsers can’t open the App Store — <b>open this page in your browser</b>.<br>">アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br></span><span data-html="1"
-      data-ja="開かないときは App Store で <b>「MammothFit」</b> を検索。"
-      data-en="Not opening? Search <b>“MammothFit”</b> on the App Store.">開かないときは App Store で <b>「MammothFit」</b> を検索。</span></p>
-  <div id="sentinel" style="height:1px"></div>
+    <div class="points">
+      <div class="pt">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.5V7.5l10-2v11"/><circle cx="6.5" cy="18.5" r="2.6"/><circle cx="16.5" cy="16.5" r="2.6"/></svg>
+        <p data-ja="広告が出ない。だから、音楽が止まらない。"
+           data-en="No ads — so your music never cuts out.">広告が出ない。だから、音楽が止まらない。</p>
+      </div>
+      <div class="pt">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h16M4 12h16M4 16.5h16"/></svg>
+        <p data-ja="ケトルベルも、ホールドも、ランも、同じログに。"
+           data-en="Kettlebells, holds and runs all live in one log.">ケトルベルも、ホールドも、ランも、同じログに。</p>
+      </div>
+      <div class="pt">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4.5" width="16" height="15" rx="2"/><path d="M8 15l3-3.5 2.5 2.5L16 11"/></svg>
+        <p data-ja="記録し終えた瞬間、共有できる1枚ができている。"
+           data-en="The moment you finish logging, a shareable card is already made.">記録し終えた瞬間、共有できる1枚ができている。</p>
+      </div>
+    </div>
 
-  <div class="bleed strip">
-    <div class="m">
-      <div class="head">
-        <label class="l" for="vol" data-ja="動かす" data-en="DRAG">動かす</label>
-        <span class="r" id="readout">12.4 t</span>
+    <div class="control">
+      <div class="cap">
+        <label class="label-ja" for="vol" data-ja="動かす" data-en="DRAG">動かす</label>
+        <span class="r" id="ro">12.4 t</span>
       </div>
       <div class="track">
         <input type="range" id="vol" min="500" max="20000" step="100" value="12400">
@@ -342,191 +395,350 @@ body.iab .fb-iab{display:inline}
           data-ja="マンモス" data-en="mammoth">マンモス</span></span></span>
       </div>
     </div>
+
+    <a class="cta" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+       data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
+    <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
+       data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
+    <p class="fallback"><span class="fb-iab" data-html="1"
+        data-ja="アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br>"
+        data-en="In-app browsers can’t open the App Store — <b>open this page in your browser</b>.<br>">アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br></span><span data-html="1"
+        data-ja="開かないときは App Store で <b>「MammothFit」</b> を検索。"
+        data-en="Not opening? Search <b>“MammothFit”</b> on the App Store.">開かないときは App Store で <b>「MammothFit」</b> を検索。</span></p>
+
+    <button class="more" type="button" data-goto="how">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13.5l6 6 6-6"/></svg>
+      <span data-ja="つかいかた" data-en="HOW IT WORKS">つかいかた</span>
+    </button>
   </div>
+</section>
 
-  <div class="bleed sec-rule"><div class="m"><span class="label" data-ja="索引" data-en="INDEX">索引</span></div></div>
+<!-- ============ 02 つかいかた ============ -->
+<section class="chapter" id="p-how" role="tabpanel" tabindex="-1" aria-labelledby="t-how" hidden>
+  <div class="wrap">
+    <div class="ch-head">
+      <span class="label-ja" data-ja="つかいかた" data-en="HOW IT WORKS">つかいかた</span>
+      <h2 data-ja="開いた日から、すぐ記録できる。" data-en="Log your first set the day you install it.">開いた日から、すぐ記録できる。</h2>
+      <p class="lead" data-ja="アカウント登録も、チュートリアルもない。開くといきなりカレンダーが出る。種目は36個ぶん最初から入っている。"
+         data-en="No account, no tutorial. It opens straight onto a calendar, with 36 exercises already in the picker.">アカウント登録も、チュートリアルもない。開くといきなりカレンダーが出る。種目は36個ぶん最初から入っている。</p>
+    </div>
 
-  <details id="d1">
-    <summary>
-      <div class="row">
-        <span class="no">01</span>
-        <span><span class="ttl" data-ja="換算" data-en="Conversion">換算</span>
-          <span class="sub" data-ja="人からマンモスまで、5段階。端数は切り捨て。"
-                data-en="Five steps, man to mammoth. Remainders dropped.">人からマンモスまで、5段階。端数は切り捨て。</span></span>
-        <span class="pm" aria-hidden="true"></span>
+    <ol class="steps">
+      <li>
+        <span class="n">01</span>
+        <div class="s">
+          <h3 data-ja="セットを記録する" data-en="Log a set">セットを記録する</h3>
+          <p data-ja="カレンダーで日を選び、黄色い「＋」を押す。種目を選ぶと入力欄が出るので、レップ数と重量を打つだけ。「セットを追加」を押すと前のセットの重量が入った行が増えるので、2セット目以降はレップ数だけ直せばいい。保存ボタンはなく、打った先から残る。"
+             data-en="Pick a day, tap the yellow “+”, choose an exercise, type reps and weight. “Add set” brings a new row pre-filled with the previous weight, so after the first set you usually only change the reps. There is no save button — it is saved as you type.">カレンダーで日を選び、黄色い「＋」を押す。種目を選ぶと入力欄が出るので、レップ数と重量を打つだけ。「セットを追加」を押すと前のセットの重量が入った行が増えるので、2セット目以降はレップ数だけ直せばいい。保存ボタンはなく、打った先から残る。</p>
+          <p class="sub" data-ja="種目名の下に「前回 24 kg · 推定1RM 30 kg」と出るので、前回の自分を見ながら決められる。"
+             data-en="Each exercise shows “last 24 kg · est. 1RM 30 kg”, so you pick your weight while looking at last time.">種目名の下に「前回 24 kg · 推定1RM 30 kg」と出るので、前回の自分を見ながら決められる。</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">02</span>
+        <div class="s">
+          <h3 data-ja="サーキットを回す" data-en="Run a circuit">サーキットを回す</h3>
+          <p data-ja="種目を並べて、ワーク・レスト・ラウンド数を決めて「開始」。全画面のカウントダウンが走り、ラウンドが変わるたびにブザーが鳴る。スマホをポケットに入れても、ロック画面にカウントダウンのカードが出て、切り替わりのたびに通知が届く。"
+             data-en="Stack the movements, set work / rest / rounds, hit start. A full-screen countdown runs and a buzzer marks every change. Put the phone in your pocket — the Lock Screen keeps a live countdown card and a banner arrives at each round change.">種目を並べて、ワーク・レスト・ラウンド数を決めて「開始」。全画面のカウントダウンが走り、ラウンドが変わるたびにブザーが鳴る。スマホをポケットに入れても、ロック画面にカウントダウンのカードが出て、切り替わりのたびに通知が届く。</p>
+          <p class="sub" data-ja="ブザーは音楽に重ねて鳴る仕組みなので、イヤホンの曲は止まらない。重量はラウンドの途中でも指でずらして直せる。"
+             data-en="The buzzer is mixed over your music, so the track keeps playing. The bell weight can be nudged mid-round.">ブザーは音楽に重ねて鳴る仕組みなので、イヤホンの曲は止まらない。重量はラウンドの途中でも指でずらして直せる。</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">03</span>
+        <div class="s">
+          <h3 data-ja="ホールドを測る" data-en="Time a hold">ホールドを測る</h3>
+          <p data-ja="プランシェ、フロントレバー、L-シット、ハンドスタンド、デッドハングなどは秒で記録する。秒の欄にストップウォッチが付いていて、押して・止めて・保存すると、その秒数がそのままセットに入る。"
+             data-en="Planche, front lever, L-sit, handstand, dead hang and more are kept in seconds. The seconds field has a stopwatch built in: start, stop, save — the elapsed time drops straight into the set.">プランシェ、フロントレバー、L-シット、ハンドスタンド、デッドハングなどは秒で記録する。秒の欄にストップウォッチが付いていて、押して・止めて・保存すると、その秒数がそのままセットに入る。</p>
+          <p class="sub" data-ja="種目名の下に「前回 15s · ベスト 22s」。ホールドはホールドとして自己ベストが残る。"
+             data-en="“last 15s · best 22s” sits under the name. Holds keep their own personal bests.">種目名の下に「前回 15s · ベスト 22s」。ホールドはホールドとして自己ベストが残る。</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">04</span>
+        <div class="s">
+          <h3 data-ja="セット間を待つ" data-en="Rest between sets">セット間を待つ</h3>
+          <p data-ja="記録画面の一番上にレストタイマーのバーが固定されている。どれだけスクロールしても消えない。押すと 1分／1分30秒／2分／3分 のボタンと、秒数の直接入力が出る。画面を閉じてもロック画面で動き続け、終わるとブザーが鳴る。"
+             data-en="A rest-timer bar is pinned to the top of the logging screen and never scrolls away. Tap it for 1m / 1m30 / 2m / 3m presets or type any number of seconds. It keeps running on the Lock Screen and buzzes when it ends.">記録画面の一番上にレストタイマーのバーが固定されている。どれだけスクロールしても消えない。押すと 1分／1分30秒／2分／3分 のボタンと、秒数の直接入力が出る。画面を閉じてもロック画面で動き続け、終わるとブザーが鳴る。</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">05</span>
+        <div class="s">
+          <h3 data-ja="終わったら振り返る" data-en="Finish &amp; review">終わったら振り返る</h3>
+          <p data-ja="「終了してレビュー」を押すと、その日の合計・セット数・レップ数・ホールド時間と、更新した自己ベストが並ぶ。同じ画面にその日の群れも出る。"
+             data-en="“Finish &amp; review” lays out the day: total volume, sets, reps, hold time, and every personal best you just set — with that day’s herd on the same screen.">「終了してレビュー」を押すと、その日の合計・セット数・レップ数・ホールド時間と、更新した自己ベストが並ぶ。同じ画面にその日の群れも出る。</p>
+          <p class="sub" data-ja="共有は3通り。画像カード、背景なしのステッカー（ストーリーズに重ねられる）、テキスト。今週の群れは、記録画面の右上にあるマンモスのアイコンから全画面にして、そのまま壁紙として写真に保存できる。"
+             data-en="Three ways to share: an image card, a transparent sticker for Stories, or plain text. Tap the mammoth icon at the top right to take this week’s herd full screen and save it to Photos as a wallpaper.">共有は3通り。画像カード、背景なしのステッカー（ストーリーズに重ねられる）、テキスト。今週の群れは、記録画面の右上にあるマンモスのアイコンから全画面にして、そのまま壁紙として写真に保存できる。</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">06</span>
+        <div class="s">
+          <h3 data-ja="Apple Watch をつなぐ（任意）" data-en="Connect Apple Watch (optional)">Apple Watch をつなぐ（任意）</h3>
+          <p data-ja="設定で「Apple Watchの有酸素を取り込む」をオンにすると、Watchで記録したランやウォークがその日の記録に自動で入る。種目名の下に「平均心拍 152 · 最大 171 · 412 kcal」と並ぶ。"
+             data-en="Turn on “Import Apple Watch cardio” in Settings and runs or walks recorded on the Watch drop into that day by themselves, with “avg HR 152 · max 171 · 412 kcal” under the name.">設定で「Apple Watchの有酸素を取り込む」をオンにすると、Watchで記録したランやウォークがその日の記録に自動で入る。種目名の下に「平均心拍 152 · 最大 171 · 412 kcal」と並ぶ。</p>
+          <p class="sub" data-ja="読み取りだけで、ヘルスケアには何も書き込まない。筋トレ系のワークアウトはあえて取り込まない（手入力と二重に数えないため）。"
+             data-en="Read-only — nothing is ever written back to Health. Strength workouts are deliberately not imported, to avoid double-counting what you logged by hand.">読み取りだけで、ヘルスケアには何も書き込まない。筋トレ系のワークアウトはあえて取り込まない（手入力と二重に数えないため）。</p>
+        </div>
+      </li>
+      <li>
+        <span class="n">07</span>
+        <div class="s">
+          <h3 data-ja="AIにメニューを組んでもらう" data-en="Get a plan from your AI">AIにメニューを組んでもらう</h3>
+          <p data-ja="コーチのタブで目的・1回の時間・器具・ケガなどを選び、「依頼文をコピー」を押す。使い慣れた ChatGPT などに貼って、返ってきた答えを丸ごとコピーして戻ると、取り込みボタンが出る。押すとチェックリスト付きのメニューになる。"
+             data-en="In the Coach tab pick your goal, session length, equipment and injuries, then “Copy the coach request”. Paste it into the ChatGPT you already use, copy the whole reply, come back — an import button is waiting. It becomes a checklist you tick off.">コーチのタブで目的・1回の時間・器具・ケガなどを選び、「依頼文をコピー」を押す。使い慣れた ChatGPT などに貼って、返ってきた答えを丸ごとコピーして戻ると、取り込みボタンが出る。押すとチェックリスト付きのメニューになる。</p>
+          <p class="sub" data-ja="依頼文には直近の記録・自己ベスト・体重・有酸素の心拍まで入る。アプリ側にAIの月額料金はない。取り込みは無料で3回まで、以降はPro。"
+             data-en="The request carries your recent sessions, bests, body weight and even cardio heart rate. There is no monthly AI fee in the app. Importing is free three times, then Pro.">依頼文には直近の記録・自己ベスト・体重・有酸素の心拍まで入る。アプリ側にAIの月額料金はない。取り込みは無料で3回まで、以降はPro。</p>
+        </div>
+      </li>
+    </ol>
+
+    <a class="cta" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+       data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
+    <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
+       data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
+  </div>
+</section>
+
+<!-- ============ 03 えらぶ理由 ============ -->
+<section class="chapter" id="p-why" role="tabpanel" tabindex="-1" aria-labelledby="t-why" hidden>
+  <div class="wrap">
+    <div class="ch-head">
+      <span class="label-ja" data-ja="えらぶ理由" data-en="WHY THIS ONE">えらぶ理由</span>
+      <h2 data-ja="広告が出ない。だから、音楽が止まらない。" data-en="No ads. So the music never stops.">広告が出ない。だから、音楽が止まらない。</h2>
+      <p class="lead" data-ja="セットの合間に広告が挟まると、そのたびに曲が切れて、集中も切れる。MammothFit は無料のままでも広告を出さない。サーキットのブザーは音楽に重ねて鳴るので、イヤホンの曲は最後まで流れ続ける。"
+         data-en="An ad between sets cuts the track and cuts your focus with it. MammothFit shows no ads, even on the free tier, and the circuit buzzer is mixed over your music instead of interrupting it.">セットの合間に広告が挟まると、そのたびに曲が切れて、集中も切れる。MammothFit は無料のままでも広告を出さない。サーキットのブザーは音楽に重ねて鳴るので、イヤホンの曲は最後まで流れ続ける。</p>
+    </div>
+
+    <ul class="reasons">
+      <li>
+        <h3 data-ja="ケトルベルが、メモ欄行きにならない" data-en="Kettlebell work stops living in a notes field">ケトルベルが、メモ欄行きにならない</h3>
+        <p data-ja="種目を並べて、ワーク・レスト・ラウンドを決めれば、それが1つの記録として残る。完了したラウンドだけが合計に入る。"
+           data-en="Stack the movements, set work / rest / rounds, and the whole thing is saved as one first-class entry. Only completed rounds count toward the total.">種目を並べて、ワーク・レスト・ラウンドを決めれば、それが1つの記録として残る。完了したラウンドだけが合計に入る。</p>
+      </li>
+      <li>
+        <h3 data-ja="タイマーと記録が、同じ画面にある" data-en="The timer and the log are the same screen">タイマーと記録が、同じ画面にある</h3>
+        <p data-ja="サーキット中もセット間も、アプリを行き来しなくていい。往復している間にセット数を忘れる、が起きない。"
+           data-en="No hopping between a timer app and a logging app mid-session — and no losing count while you do it.">サーキット中もセット間も、アプリを行き来しなくていい。往復している間にセット数を忘れる、が起きない。</p>
+      </li>
+      <li>
+        <h3 data-ja="ホールドに、正式な居場所がある" data-en="Holds get a real place">ホールドに、正式な居場所がある</h3>
+        <p data-ja="プランシェもフロントレバーも、秒で測ってそのまま種目として残る。自己ベストもホールドとして更新される。"
+           data-en="Planche and front lever are timed in seconds and kept as exercises in their own right, with their own personal bests.">プランシェもフロントレバーも、秒で測ってそのまま種目として残る。自己ベストもホールドとして更新される。</p>
+      </li>
+      <li>
+        <h3 data-ja="やった量が、目に見える形で残る" data-en="The work you did takes a shape you can see">やった量が、目に見える形で残る</h3>
+        <p data-ja="合計が動物の群れになる。今週の群れは壁紙にできるし、1セッション分は黒と金のカードにしてそのまま送れる。"
+           data-en="Your total becomes a herd. This week’s herd can be saved as a wallpaper; a single session becomes a black-and-gold card you can send as is.">合計が動物の群れになる。今週の群れは壁紙にできるし、1セッション分は黒と金のカードにしてそのまま送れる。</p>
+      </li>
+      <li>
+        <h3 data-ja="買い切り。サブスクではない" data-en="Buy it once. Not a subscription">買い切り。サブスクではない</h3>
+        <p data-ja="記録の機能は無料で全部使える。Pro は ¥500 の買い切りで、AIメニューの取り込みが無制限になる。毎月の請求は発生しない。"
+           data-en="All the logging is free. Pro is a one-time ¥500 that makes AI plan imports unlimited. Nothing recurs.">記録の機能は無料で全部使える。Pro は ¥500 の買い切りで、AIメニューの取り込みが無制限になる。毎月の請求は発生しない。</p>
+      </li>
+      <li>
+        <h3 data-ja="アカウントを作らなくていい" data-en="No account to create">アカウントを作らなくていい</h3>
+        <p data-ja="メールアドレスもパスワードもいらない。記録は端末の中にあり、こちらのサーバーには送られない。"
+           data-en="No email, no password. Your log stays on your device and is never sent to a server of mine.">メールアドレスもパスワードもいらない。記録は端末の中にあり、こちらのサーバーには送られない。</p>
+      </li>
+    </ul>
+
+    <a class="cta" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+       data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
+    <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
+       data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
+  </div>
+</section>
+
+<!-- ============ 04 Q&A ============ -->
+<section class="chapter" id="p-qa" role="tabpanel" tabindex="-1" aria-labelledby="t-qa" hidden>
+  <div class="wrap">
+    <div class="ch-head">
+      <span class="label-ja" data-ja="よくある質問" data-en="QUESTIONS">よくある質問</span>
+      <h2 data-ja="先に知っておきたいこと。" data-en="Answered before you download.">先に知っておきたいこと。</h2>
+    </div>
+
+    <dl class="qa">
+      <div class="q">
+        <dt data-ja="無料でどこまで使えますか？" data-en="What do I get for free?">無料でどこまで使えますか？</dt>
+        <dd data-ja="記録に関わる機能は全部無料です。セットもサーキットもホールドも体重も、回数の制限なく記録できます。共有カードも壁紙も、CSVの書き出しも無料です。有料になるのは、AIが返してきたメニューの取り込み（無料は3回まで）と、アクセント色の追加分だけです。"
+            data-en="Everything to do with logging is free — sets, circuits, holds, body weight, with no caps. Share cards, wallpapers and CSV export are free too. Only two things are paid: importing an AI plan beyond the first three, and the extra accent colours.">記録に関わる機能は全部無料です。セットもサーキットもホールドも体重も、回数の制限なく記録できます。共有カードも壁紙も、CSVの書き出しも無料です。有料になるのは、AIが返してきたメニューの取り込み（無料は3回まで）と、アクセント色の追加分だけです。</dd>
       </div>
-    </summary>
-    <div class="panel"><div class="innerwrap"><div class="inner">
-      <dl>
-        <div class="kv"><span class="g b-person" style="width:7.6px" aria-hidden="true"></span>
-          <dt data-ja="人" data-en="Man">人</dt><span class="leader"></span><dd data-ref="person">70 kg</dd></div>
-        <div class="kv"><span class="g b-sumo" style="width:13.6px" aria-hidden="true"></span>
-          <dt data-ja="力士" data-en="Sumo">力士</dt><span class="leader"></span><dd data-ref="sumo">150 kg</dd></div>
-        <div class="kv"><span class="g b-gorilla" style="width:17.3px" aria-hidden="true"></span>
-          <dt data-ja="ゴリラ" data-en="Gorilla">ゴリラ</dt><span class="leader"></span><dd data-ref="gorilla">200 kg</dd></div>
-        <div class="kv"><span class="g b-elephant" style="width:24.7px" aria-hidden="true"></span>
-          <dt data-ja="ゾウ" data-en="Elephant">ゾウ</dt><span class="leader"></span><dd data-ref="elephant">1,000 kg</dd></div>
-        <div class="kv mm"><span class="g b-mammoth" style="width:25.8px" aria-hidden="true"></span>
-          <dt data-ja="マンモス" data-en="Mammoth">マンモス</dt><span class="leader"></span><dd data-ref="mammoth">6,000 kg</dd></div>
+      <div class="q">
+        <dt data-ja="¥500 の Pro を買うと何が変わりますか？" data-en="What does the ¥500 Pro unlock?">¥500 の Pro を買うと何が変わりますか？</dt>
+        <dd data-ja="AIメニューの取り込みが無制限になり、アクセント色が6色すべて使えるようになります。買い切りで、サブスクではありません。機種変更や再インストールのときは「購入を復元」から戻せます。"
+            data-en="Unlimited AI plan imports and all six accent colours. It is a one-time purchase, not a subscription, and “Restore purchase” brings it back on a new phone or after a reinstall.">AIメニューの取り込みが無制限になり、アクセント色が6色すべて使えるようになります。買い切りで、サブスクではありません。機種変更や再インストールのときは「購入を復元」から戻せます。</dd>
+      </div>
+      <div class="q">
+        <dt data-ja="動物はどうやって決まりますか？" data-en="How is the herd decided?">動物はどうやって決まりますか？</dt>
+        <dd data-html="1"
+            data-ja='合計の重さを、人 70 kg・力士 150 kg・ゴリラ 200 kg・ゾウ 1,000 kg・マンモス 6,000 kg に、大きい順で割り当てます。端数は切り捨てです。マンモスだけは合計が <b><span data-kg="8000">8.0 t</span></b> に達すると現れます（1頭で立たせないよう、お供の分を残しているため）。日・週の群れではマンモスは2頭まで（2頭目は 14 t から）で、それ以上はゾウ以下に回ります。合計が1トンに達すると表示がトンに変わります。'
+            data-en='Your total is spent largest-first on man 70 kg, sumo 150 kg, gorilla 200 kg, elephant 1,000 kg, mammoth 6,000 kg, dropping the remainder. A mammoth appears once you reach <b><span data-kg="8000">8.0 t</span></b>, so it never stands alone. Day and week herds hold at most two mammoths (the second from 14 t); the rest goes to elephants and below. Totals switch to tonnes from one tonne.'>合計の重さを、人 70 kg・力士 150 kg・ゴリラ 200 kg・ゾウ 1,000 kg・マンモス 6,000 kg に、大きい順で割り当てます。端数は切り捨てです。マンモスだけは合計が <b><span data-kg="8000">8.0 t</span></b> に達すると現れます（1頭で立たせないよう、お供の分を残しているため）。日・週の群れではマンモスは2頭まで（2頭目は 14 t から）で、それ以上はゾウ以下に回ります。合計が1トンに達すると表示がトンに変わります。</dd>
+      </div>
+      <div class="q">
+        <dt data-ja="ホールドやランも群れになりますか？" data-en="Do holds and runs become animals?">ホールドやランも群れになりますか？</dt>
+        <dd data-ja="いいえ。群れになるのは「挙げた重さ」だけです。ホールドは秒、ランは距離とペースとして、同じログの中に別々に残ります。動かしていない重さを重さとして数えないための線引きです。"
+            data-en="No. Only weight you actually moved becomes animals. Holds stay in seconds and runs stay in distance and pace, in the same log but counted separately — because nothing was lifted.">いいえ。群れになるのは「挙げた重さ」だけです。ホールドは秒、ランは距離とペースとして、同じログの中に別々に残ります。動かしていない重さを重さとして数えないための線引きです。</dd>
+      </div>
+      <div class="q">
+        <dt data-ja="懸垂や腕立ては、重さゼロになりませんか？" data-en="Do pull-ups and push-ups count as zero?">懸垂や腕立ては、重さゼロになりませんか？</dt>
+        <dd data-ja="体重を1回登録しておけば、体重に種目ごとの係数を掛けて重さに換算します（懸垂 0.95、腕立て 0.64 など）。加重していればその分も足されます。体重を登録していない間は 0 のままなので、最初に一度だけ入れてください。係数はサポートページに全部公開しています。"
+            data-en="Log your body weight once and reps convert into real kilos using a per-exercise factor (pull-up 0.95, push-up 0.64, and so on), plus any added plates. Until you log a body weight it stays at zero, so enter it once. Every factor is published on the support page.">体重を1回登録しておけば、体重に種目ごとの係数を掛けて重さに換算します（懸垂 0.95、腕立て 0.64 など）。加重していればその分も足されます。体重を登録していない間は 0 のままなので、最初に一度だけ入れてください。係数はサポートページに全部公開しています。</dd>
+      </div>
+      <div class="q">
+        <dt data-ja="記録はどこに保存されますか？" data-en="Where is my data kept?">記録はどこに保存されますか？</dt>
+        <dd data-ja="端末の中だけです。アカウントがないので、こちらから記録を見ることはできません。設定からCSVで書き出せます。いまのところクラウド同期はないので、アプリを削除すると記録も消えます。"
+            data-en="On your device only. There is no account, so I cannot see your log. You can export it as CSV from Settings. There is no cloud sync yet, so deleting the app deletes the data.">端末の中だけです。アカウントがないので、こちらから記録を見ることはできません。設定からCSVで書き出せます。いまのところクラウド同期はないので、アプリを削除すると記録も消えます。</dd>
+      </div>
+      <div class="q">
+        <dt data-ja="Apple Watch は必要ですか？" data-en="Do I need an Apple Watch?">Apple Watch は必要ですか？</dt>
+        <dd data-ja="いりません。持っている人だけ、設定でオンにすると有酸素の記録が自動で入ります。読み取りだけで、ヘルスケアには何も書き込みません。"
+            data-en="No. If you have one, turning it on in Settings pulls your cardio in automatically. It only reads — nothing is written back to Health.">いりません。持っている人だけ、設定でオンにすると有酸素の記録が自動で入ります。読み取りだけで、ヘルスケアには何も書き込みません。</dd>
+      </div>
+      <div class="q">
+        <dt data-ja="AIコーチに別料金はかかりますか？" data-en="Does the AI coach cost extra?">AIコーチに別料金はかかりますか？</dt>
+        <dd data-ja="アプリ側にAIの利用料はありません。アプリがやるのは依頼文を組み立てることだけで、答えを出すのは普段お使いの ChatGPT などです。APIキーの登録も不要です。"
+            data-en="Not in the app. It only assembles the request; the answer comes from the ChatGPT you already use. No API key to register.">アプリ側にAIの利用料はありません。アプリがやるのは依頼文を組み立てることだけで、答えを出すのは普段お使いの ChatGPT などです。APIキーの登録も不要です。</dd>
+      </div>
+      <div class="q">
+        <dt data-ja="対応している端末と言語は？" data-en="Which devices and languages?">対応している端末と言語は？</dt>
+        <dd data-ja="iPhone 専用で、iOS 18 以降が必要です。日本語と英語に対応していて、端末の言語に合わせて切り替わります（設定で固定もできます）。"
+            data-en="iPhone only, iOS 18 or later. Japanese and English, following your system language (or fixed in Settings).">iPhone 専用で、iOS 18 以降が必要です。日本語と英語に対応していて、端末の言語に合わせて切り替わります（設定で固定もできます）。</dd>
+      </div>
+    </dl>
+
+    <p class="note" data-html="1"
+       data-ja='ほかに知りたいことがあれば <a href="../">サポートページ</a> に計算式まで書いています。'
+       data-en='Anything else — the <a href="../">support page</a> spells out every formula.'>ほかに知りたいことがあれば <a href="../">サポートページ</a> に計算式まで書いています。</p>
+
+    <a class="cta" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+       data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
+    <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
+       data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
+  </div>
+</section>
+
+<!-- ============ 05 つくった人 ============ -->
+<section class="chapter" id="p-maker" role="tabpanel" tabindex="-1" aria-labelledby="t-maker" hidden>
+  <div class="wrap">
+    <div class="ch-head">
+      <span class="label-ja" data-ja="つくった人" data-en="WHO MADE THIS">つくった人</span>
+      <h2 data-ja="走った距離が称えられるなら、挙げた重さも称えられていい。" data-en="If distance run gets celebrated, weight lifted should too.">走った距離が称えられるなら、挙げた重さも称えられていい。</h2>
+      <p class="lead" data-ja="ランニングには、走った距離が積み上がって、それを見せ合える場所があります。同じことを筋トレでもやりたかった、というのがこのアプリの出発点です。"
+         data-en="Running has a place where distance piles up and gets shared. I wanted the same thing for lifting. That is where this app started.">ランニングには、走った距離が積み上がって、それを見せ合える場所があります。同じことを筋トレでもやりたかった、というのがこのアプリの出発点です。</p>
+    </div>
+
+    <p class="body" data-ja="トレーニング歴は6〜7年。ウエイトから始めて、いまはカリステニクスとケトルベルを混ぜています。そのなかで、ホールド系の技がうまく記録できないこと、ケトルベルのサーキット中にタイマーのアプリと記録のアプリを何度も往復すること、この2つがずっと不満でした。自分がほしかったものを、1つのアプリにまとめています。"
+       data-en="I have trained for six or seven years — barbell work first, now mixed with calisthenics and kettlebells. Two things kept bothering me: holds were awkward to record, and kettlebell circuits meant bouncing between a timer app and a logging app. This app is the thing I wanted, with both fixed.">トレーニング歴は6〜7年。ウエイトから始めて、いまはカリステニクスとケトルベルを混ぜています。そのなかで、ホールド系の技がうまく記録できないこと、ケトルベルのサーキット中にタイマーのアプリと記録のアプリを何度も往復すること、この2つがずっと不満でした。自分がほしかったものを、1つのアプリにまとめています。</p>
+    <p class="body" data-ja="そしてもう1つ、広告です。セットの合間に広告が出て音楽が止まるのが本当に嫌でした。だからこのアプリには、無料でも広告を入れていません。作った3本とも同じ方針です。"
+       data-en="And ads. Having the music cut out for an ad between sets is the thing I hated most, so there are none here — not even on the free tier. The same goes for all three apps I have made.">そしてもう1つ、広告です。セットの合間に広告が出て音楽が止まるのが本当に嫌でした。だからこのアプリには、無料でも広告を入れていません。作った3本とも同じ方針です。</p>
+
+    <div class="bio">
+      <span class="label-ja" data-ja="経歴" data-en="BACKGROUND">経歴</span>
+      <dl class="tl">
+        <div><dt data-ja="5年" data-en="5 years">5年</dt>
+          <dd data-ja="警視庁に勤務。" data-en="Served with the Tokyo Metropolitan Police Department.">警視庁に勤務。</dd></div>
+        <div><dt data-ja="1年" data-en="1 year">1年</dt>
+          <dd data-ja="退職後、ギャップイヤー。" data-en="A gap year after leaving.">退職後、ギャップイヤー。</dd></div>
+        <div><dt data-ja="いま" data-en="Now">いま</dt>
+          <dd data-ja="AIを使った開発に触れ、1年前から個人開発。これまでに3本リリース。"
+              data-en="Picked up AI-assisted development and have been building solo for a year. Three apps shipped so far.">AIを使った開発に触れ、1年前から個人開発。これまでに3本リリース。</dd></div>
       </dl>
-      <p id="mnote" data-html="1"
-         data-ja='マンモスだけは <b><span data-kg="8000">8.0 t</span> から</b>現れる。1頭で立たせないよう、お供の分を残してある。'
-         data-en='A mammoth appears only <b>from <span data-kg="8000">8.0 t</span></b> — the app keeps enough in reserve so it never stands alone.'>マンモスだけは <b><span data-kg="8000">8.0 t</span> から</b>現れる。1頭で立たせないよう、お供の分を残してある。</p>
-      <p data-ja="表は1頭あたりの基準重量。合計が1トンを超えたらトンで出す — アプリと同じ規則。"
-         data-en="The table is the reference mass per animal. Totals switch to tonnes past one tonne — the same rule as the app.">表は1頭あたりの基準重量。合計が1トンを超えたらトンで出す — アプリと同じ規則。</p>
-      <p data-ja="大きい順に取って、端数は切り捨て。上の数字はサンプルで、誰かの実績ではない。"
-         data-en="Largest first, remainders dropped. The figure above is a sample you can move, not anyone's record.">大きい順に取って、端数は切り捨て。上の数字はサンプルで、誰かの実績ではない。</p>
-    </div></div></div>
-  </details>
+    </div>
 
-  <details id="d2">
-    <summary>
-      <div class="row">
-        <span class="no">02</span>
-        <span><span class="ttl" data-ja="中身" data-en="What's in it">中身</span>
-          <span class="sub" data-ja="タイマー、ホールド、Watch、AI、壁紙。"
-                data-en="Timer, holds, Watch, AI, wallpaper.">タイマー、ホールド、Watch、AI、壁紙。</span></span>
-        <span class="pm" aria-hidden="true"></span>
-      </div>
-    </summary>
-    <div class="panel"><div class="innerwrap"><div class="inner">
-      <p class="lead-in" data-ja="ケトルベル・コンプレックス" data-en="Kettlebell complexes">ケトルベル・コンプレックス</p>
-      <p data-ja="ワーク／レスト／ラウンドを組んで、全画面のタイマーで回す。合計に入るのは完了したラウンドだけ。"
-         data-en="Build work / rest / rounds and run a full-screen timer. Only completed rounds count toward the total.">ワーク／レスト／ラウンドを組んで、全画面のタイマーで回す。合計に入るのは完了したラウンドだけ。</p>
-      <p class="lead-in" data-ja="ホールド計測" data-en="Holds, timed">ホールド計測</p>
-      <p data-ja="プランシェ、フロントレバー、L-シット。重さは動いていないので、秒で記録する。"
-         data-en="Planche, front lever, L-sit. No weight moves, so they are kept in seconds.">プランシェ、フロントレバー、L-シット。重さは動いていないので、秒で記録する。</p>
-      <p class="lead-in">Apple Watch</p>
-      <p data-ja="Watch で記録したランとウォークが自動で入る。読み取りのみ。"
-         data-en="Runs and walks recorded on the Watch come in automatically. Read-only.">Watch で記録したランとウォークが自動で入る。読み取りのみ。</p>
-      <p class="lead-in" data-ja="AIコーチ" data-en="AI coach">AIコーチ</p>
-      <p data-ja="記録から依頼文を組み立てるだけ。貼り先はいつも使っている ChatGPT。月額の AI 料金はない。依頼文づくりは無制限、返ってきたメニューの取り込みは無料で3回まで、以降は Pro。"
-         data-en="It only assembles a request from your log. You paste it into the ChatGPT you already use. No monthly AI fee. Building requests is unlimited; importing the returned plan is free three times, then Pro.">記録から依頼文を組み立てるだけ。貼り先はいつも使っている ChatGPT。月額の AI 料金はない。依頼文づくりは無制限、返ってきたメニューの取り込みは無料で3回まで、以降は Pro。</p>
-      <p class="lead-in" data-ja="壁紙" data-en="Wallpaper">壁紙</p>
-      <p data-ja="今週の群れを鑑賞モードで眺めて、そのまま画像に保存できる。"
-         data-en="Look at this week's herd in gallery mode and save it as an image.">今週の群れを鑑賞モードで眺めて、そのまま画像に保存できる。</p>
-    </div></div></div>
-  </details>
+    <h2 style="margin-top:52px" data-ja="つくった3本" data-en="The three apps">つくった3本</h2>
+    <p class="sub-lead" data-ja="どれも広告なし。ノイズのない操作性を軸にしています。"
+       data-en="No ads in any of them. Quiet, uninterrupted use is the through-line.">どれも広告なし。ノイズのない操作性を軸にしています。</p>
 
-  <details id="d3">
-    <summary>
-      <div class="row">
-        <span class="no">03</span>
-        <span><span class="ttl" data-ja="前提" data-en="Ground rules">前提</span>
-          <span class="sub" data-ja="値段、広告、データ、計算式。"
-                data-en="Price, ads, data, formulas.">値段、広告、データ、計算式。</span></span>
-        <span class="pm" aria-hidden="true"></span>
-      </div>
-    </summary>
-    <div class="panel"><div class="innerwrap"><div class="inner">
-      <ul class="rules">
-        <li data-ja="本体は無料。MammothFit Pro は ¥500 の買い切り。"
-            data-en="The app is free. MammothFit Pro is a one-time ¥500.">本体は無料。MammothFit Pro は ¥500 の買い切り。</li>
-        <li data-ja="広告なし。アカウント登録もなし。"
-            data-en="No ads. No account.">広告なし。アカウント登録もなし。</li>
-        <li data-ja="記録は端末の中だけ。CSV でいつでも書き出せる。"
-            data-en="Your log stays on your device. Export it as CSV anytime.">記録は端末の中だけ。CSV でいつでも書き出せる。</li>
-        <li data-ja="換算も自重の係数も、計算式はサポートページに全部公開している。"
-            data-en="Every formula — the conversions and the bodyweight factors — is published on the support page.">換算も自重の係数も、計算式はサポートページに全部公開している。</li>
-      </ul>
-    </div></div></div>
-  </details>
-
-  <details id="d4">
-    <summary>
-      <div class="row">
-        <span class="no">04</span>
-        <span><span class="ttl" data-ja="ほかにつくったもの" data-en="Other things I've made">ほかにつくったもの</span>
-          <span class="sub" data-ja="iPhoneアプリを2本。" data-en="Two more iPhone apps.">iPhoneアプリを2本。</span></span>
-        <span class="pm" aria-hidden="true"></span>
-      </div>
-    </summary>
-    <div class="panel"><div class="innerwrap"><div class="inner">
+    <div class="apps">
+      <a class="app" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener">
+        <span class="ico" style="background-image:var(--appicon)" aria-hidden="true"></span>
+        <span class="b"><span class="n">MammothFit</span>
+          <span class="d" data-ja="1キロが、群れになる。挙げた重さを動物の群れに換算する筋トレ記録。"
+                data-en="A kilo becomes a herd — training logged as animals you earned.">1キロが、群れになる。挙げた重さを動物の群れに換算する筋トレ記録。</span></span>
+        <span class="go" aria-hidden="true">↗</span>
+      </a>
       <a class="app" href="https://apps.apple.com/jp/app/id6767754470" rel="noopener">
         <span class="ico" style="background-image:url(data:image/webp;base64,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)" aria-hidden="true"></span>
-        <span class="body"><span class="n">PetMoment</span><br>
-          <span class="d" data-ja="ペットの写真アプリ。" data-en="A photo app for pets.">ペットの写真アプリ。</span></span>
-        <span class="go">↗</span>
+        <span class="b"><span class="n">PetMoment</span>
+          <span class="d" data-ja="動画から、最高の瞬間を逃さない。AIがブレを避け、好みの画角を学習して静止画を切り出す。"
+                data-en="Never miss the best frame — AI skips the blur and learns the framing you like, pulling stills out of pet videos.">動画から、最高の瞬間を逃さない。AIがブレを避け、好みの画角を学習して静止画を切り出す。</span></span>
+        <span class="go" aria-hidden="true">↗</span>
       </a>
       <a class="app" href="https://apps.apple.com/jp/app/id6781934914" rel="noopener">
         <span class="ico" style="background-image:url(data:image/webp;base64,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)" aria-hidden="true"></span>
-        <span class="body"><span class="n">わんにゃんお薬手帳</span><br>
-          <span class="d" data-ja="犬と猫の投薬と健康の記録。家族と共有できる。無料＋サブスク。"
-                data-en="Medication and health records for dogs and cats, shared with family. Free with a subscription.">犬と猫の投薬と健康の記録。家族と共有できる。無料＋サブスク。</span></span>
-        <span class="go">↗</span>
+        <span class="b"><span class="n">わんにゃんお薬手帳</span>
+          <span class="d" data-ja="大切な家族の健康を、みんなで見守る。投薬と体調を家族で共有でき、そのまま獣医さんに見せられる。"
+                data-en="Watch over your pet together — medication and symptoms shared with family, in a form you can show the vet.">大切な家族の健康を、みんなで見守る。投薬と体調を家族で共有でき、そのまま獣医さんに見せられる。</span></span>
+        <span class="go" aria-hidden="true">↗</span>
       </a>
-    </div></div></div>
-  </details>
+    </div>
 
-  <details id="d5">
-    <summary>
-      <div class="row">
-        <span class="no">05</span>
-        <span><span class="ttl" data-ja="つくっている人" data-en="Who made this">つくっている人</span>
-          <span class="sub" data-ja="個人開発者。Web・LP の制作も受ける。"
-                data-en="Solo developer. Also available for web and LP work.">個人開発者。Web・LP の制作も受ける。</span></span>
-        <span class="pm" aria-hidden="true"></span>
-      </div>
-    </summary>
-    <div class="panel"><div class="innerwrap"><div class="inner">
-      <p data-ja="個人開発者。ここにある3本を、企画・デザイン・実装・App Store の運用までひとりでやっている。"
-         data-en="Solo developer. All three apps here — concept, design, code and App Store operations — done by one person.">個人開発者。ここにある3本を、企画・デザイン・実装・App Store の運用までひとりでやっている。</p>
-      <div class="quote">
-        <p data-ja="上の群れは画像ではない。頭数はアプリと同じ計算式で、いまブラウザの中で出している。重さの表記も、アプリと同じ関数を移植して出している。"
-           data-en="The herd above isn't an image. The head count is computed here in your browser with the same formula the app uses, and the weights are printed by the same ported function.">上の群れは画像ではない。頭数はアプリと同じ計算式で、いまブラウザの中で出している。重さの表記も、アプリと同じ関数を移植して出している。</p>
-        <p data-ja="このページも同じ。HTML 1枚、外部の読み込みはゼロ、追跡もなし。Instagram のアプリ内ブラウザで確実に開くように作ってある。サポートページとプライバシーページも同じ作り。"
-           data-en="This page is the same: one HTML file, zero external requests, no tracking, built to open reliably inside Instagram's in-app browser. The support and privacy pages are mine too.">このページも同じ。HTML 1枚、外部の読み込みはゼロ、追跡もなし。Instagram のアプリ内ブラウザで確実に開くように作ってある。サポートページとプライバシーページも同じ作り。</p>
-      </div>
-      <div class="offer">
-        <h3 data-ja="Web サイト・LP の制作" data-en="Websites and landing pages">Web サイト・LP の制作</h3>
-        <p data-ja="1枚ものの LP、アプリのサポート／プライバシーページ、ストア掲載文まで。用途と規模を書いて送ってください。返信は本人から。"
-           data-en="One-page LPs, app support and privacy pages, App Store copy. Write what it's for and how big it is. You'll hear back from me.">1枚ものの LP、アプリのサポート／プライバシーページ、ストア掲載文まで。用途と規模を書いて送ってください。返信は本人から。</p>
-        <a class="mail" href="mailto:you.ri21713@gmail.com?subject=Web%E3%82%B5%E3%82%A4%E3%83%88%E3%83%BBLP%E5%88%B6%E4%BD%9C%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87">you.ri21713@gmail.com</a>
-      </div>
-    </div></div></div>
-  </details>
+    <div class="offer">
+      <span class="label-ja" data-ja="つながる" data-en="ELSEWHERE">つながる</span>
+      <a class="link-row" href="https://www.instagram.com/yugo.mammothfit/" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        <span class="b"><span class="n">@yugo.mammothfit</span>
+          <span class="d" data-ja="トレーニングと開発の記録をあげています。"
+                data-en="Training and building, posted as it happens.">トレーニングと開発の記録をあげています。</span></span>
+        <span class="go" aria-hidden="true">↗</span>
+      </a>
+    </div>
 
-  <div class="bleed endmark"><div class="m">
-    <p class="endline" data-ja="数字を読むな。群れを見ろ。" data-en="Don't read numbers. Look at the herd.">数字を読むな。群れを見ろ。</p>
-  </div></div>
+    <div class="offer">
+      <span class="label-ja" data-ja="制作のご依頼" data-en="AVAILABLE FOR WORK">制作のご依頼</span>
+      <h2 style="margin-top:16px" data-ja="Web サイト・LP の制作" data-en="Websites and landing pages">Web サイト・LP の制作</h2>
+      <p class="lead" data-ja="1枚ものの LP、アプリのサポート／プライバシーページ、ストア掲載文まで。このページも同じ作りで、HTML 1枚・外部の読み込みゼロ・追跡なしです。用途と規模を書いて送ってください。返信は本人から。"
+         data-en="One-page LPs, app support and privacy pages, App Store copy. This page is built the same way — one HTML file, zero external requests, no tracking. Write what it’s for and how big it is; you’ll hear back from me.">1枚ものの LP、アプリのサポート／プライバシーページ、ストア掲載文まで。このページも同じ作りで、HTML 1枚・外部の読み込みゼロ・追跡なしです。用途と規模を書いて送ってください。返信は本人から。</p>
+      <a class="mail" href="mailto:you.ri21713@gmail.com?subject=Web%E3%82%B5%E3%82%A4%E3%83%88%E3%83%BBLP%E5%88%B6%E4%BD%9C%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87">you.ri21713@gmail.com</a>
+    </div>
 
-  <a class="cta" data-store href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
-     data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
-  <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
-     data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
-  <p class="fallback"><span class="fb-iab" data-html="1"
-      data-ja="アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br>"
-      data-en="In-app browsers can’t open the App Store — <b>open this page in your browser</b>.<br>">アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br></span><span data-html="1"
-      data-ja="開かないときは App Store で <b>「MammothFit」</b> を検索。"
-      data-en="Not opening? Search <b>“MammothFit”</b> on the App Store.">開かないときは App Store で <b>「MammothFit」</b> を検索。</span></p>
+    <p class="endline" data-ja="数字を読むな。群れを見ろ。" data-en="Don’t read numbers. Look at the herd.">数字を読むな。群れを見ろ。</p>
+  </div>
+</section>
 
-  <footer class="bleed"><div class="m">
+</main>
+
+<footer>
+  <div class="wrap">
     <a href="../" data-ja="サポート" data-en="Support">サポート</a>
     <a href="../privacy/" data-ja="プライバシー" data-en="Privacy">プライバシー</a>
     <span class="cr">© 2026 MammothFit　·　<span data-ja="このページの制作" data-en="This page by">このページの制作</span> — you.ri21713@gmail.com</span>
-  </div></footer>
-
-</div>
-
-<div class="rescue" id="rescue" tabindex="-1" hidden>
-  <div class="rescue-head">
-    <strong data-ja="このままでは App Store を開けません" data-en="The App Store won’t open in here">このままでは App Store を開けません</strong>
-    <button type="button" class="rescue-x" id="rescue-close" aria-label="閉じる">×</button>
   </div>
-  <ol class="rescue-steps">
+</footer>
+
+<nav class="tabs" role="tablist" aria-label="章" data-ja-label="章" data-en-label="Chapters">
+  <div class="in">
+    <button type="button" role="tab" id="t-what" aria-controls="p-what" aria-selected="true"
+            data-ja="これはなに" data-en="What">これはなに</button>
+    <button type="button" role="tab" id="t-how" aria-controls="p-how" aria-selected="false" tabindex="-1"
+            data-ja="つかいかた" data-en="How">つかいかた</button>
+    <button type="button" role="tab" id="t-why" aria-controls="p-why" aria-selected="false" tabindex="-1"
+            data-ja="えらぶ理由" data-en="Why">えらぶ理由</button>
+    <button type="button" role="tab" id="t-qa" aria-controls="p-qa" aria-selected="false" tabindex="-1"
+            data-ja="Q&amp;A" data-en="Q&amp;A">Q&amp;A</button>
+    <button type="button" role="tab" id="t-maker" aria-controls="p-maker" aria-selected="false" tabindex="-1"
+            data-ja="つくった人" data-en="Maker">つくった人</button>
+  </div>
+</nav>
+
+<div class="rescue" id="rescue" tabindex="-1" role="dialog" aria-modal="false"
+     aria-labelledby="rescue-title" hidden>
+  <div class="rescue-head">
+    <strong id="rescue-title" data-ja="このままでは App Store を開けません" data-en="The App Store won’t open in here">このままでは App Store を開けません</strong>
+    <button type="button" class="rescue-x" id="rescue-close" aria-label="閉じる"
+          data-ja-label="閉じる" data-en-label="Close">×</button>
+  </div>
+  <ol>
     <li id="step1" data-html="1" data-ja="ブラウザの <b>メニュー</b> を開く" data-en="Open the browser <b>menu</b>">ブラウザの <b>メニュー</b> を開く</li>
     <li id="step2" data-html="1" data-ja="<b>「Safari で開く」</b> を選ぶ" data-en="Choose <b>“Open in Safari”</b>">「Safari で開く」 を選ぶ</li>
     <li data-ja="開き直したページで、もう一度ボタンをタップ" data-en="Tap the button again on the reopened page">開き直したページで、もう一度ボタンをタップ</li>
   </ol>
-  <button type="button" class="rescue-copy" id="rescue-copy" data-ja="App Store のリンクをコピー" data-en="Copy the App Store link">App Store のリンクをコピー</button>
-  <p class="rescue-copied" id="rescue-copied" hidden data-ja="コピーしました。Safari に貼り付けると開けます" data-en="Copied. Paste it into Safari to open">コピーしました。Safari に貼り付けると開けます</p>
-</div>
-
-<div class="bar" id="bar">
-  <span class="mark" aria-hidden="true"></span>
-  <span class="wordmark" aria-hidden="true">MAMMOTHFIT</span>
-  <a class="pill" data-store href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
-     data-ja="入手" data-en="Get">入手</a>
+  <button type="button" class="rescue-copy" id="rescue-copy"
+          data-ja="App Store のリンクをコピー" data-en="Copy the App Store link">App Store のリンクをコピー</button>
+  <p class="rescue-copied" id="rescue-copied" hidden
+     data-ja="コピーしました。Safari に貼り付けると開けます" data-en="Copied. Paste it into Safari to open">コピーしました。Safari に貼り付けると開けます</p>
 </div>
 
 <script>
@@ -548,8 +760,7 @@ body.iab .fb-iab{display:inline}
   var EN = {mammoth:'mammoth', elephant:'elephant', gorilla:'gorilla', sumo:'sumo', person:'man'};
   var ENP = {mammoth:'mammoths', elephant:'elephants', gorilla:'gorillas', sumo:'sumos', person:'men'};
 
-  // アプリと同一（ShareCard.swift:24 / ProgressDashboardView.swift:973）。
-  // 桁区切りは付けない — アプリが付けないため。
+  // アプリと同一（ShareCard.swift / ProgressDashboardView.swift）。桁区切りは付けない。
   function volumeText(v){
     return v >= 1000 ? (v / 1000).toFixed(1) + ' t' : Math.trunc(v) + ' kg';
   }
@@ -585,8 +796,6 @@ body.iab .fb-iab{display:inline}
     return cast;
   }
 
-  // avoiding: 立入禁止の矩形（実測バー）。アプリの共有カードと同じ扱いで、
-  // 誰も数字の裏に立たない（HerdWall.swift の avoiding 引数）。
   function layout(W, H, v, avoiding){
     if (W < 40 || H < 40) return [];
     avoiding = avoiding || [];
@@ -630,7 +839,6 @@ body.iab .fb-iab{display:inline}
           var dy = (r.y + r.h / 2) - (pr.rect.y + pr.rect.h / 2);
           dmin = Math.min(dmin, dx * dx + dy * dy);
         }
-        // 数字の裏に隠される割合は「減点」ではなく足切りにする
         var hidden = 0;
         var visX = Math.max(0, Math.min(r.x + r.w, W) - Math.max(r.x, 0));
         var visArea = Math.max(visX * r.h, 1);
@@ -662,10 +870,10 @@ body.iab .fb-iab{display:inline}
   var herd = document.getElementById('herd');
   var figEl = document.getElementById('fig');
   var unitEl = document.getElementById('unit');
-  var readEl = document.getElementById('readout');
+  var roEl = document.getElementById('ro');
   var capEl = document.getElementById('cap');
   var slider = document.getElementById('vol');
-  var plateLabel = document.querySelector('.plate-label');
+  var plateCap = document.querySelector('.plate-cap');
   var lang = 'ja';
   var lastUnit = 't';
 
@@ -676,16 +884,15 @@ body.iab .fb-iab{display:inline}
       if (!c[a]) continue;
       parts.push(lang === 'ja' ? JA[a] + c[a] : c[a] + ' ' + (c[a] > 1 ? ENP[a] : EN[a]));
     }
-    return parts.length ? '≈ ' + parts.join(' · ') : (lang === 'ja' ? 'まだ空っぽ' : 'Still empty');
+    return parts.length ? parts.join(' · ') : (lang === 'ja' ? 'まだ空っぽ' : 'Still empty');
   }
 
   function render(v){
     var box = stage.getBoundingClientRect();
-    var W = box.width || 520, H = box.height || W * 0.625;
-    // 図版番号の帯も立入禁止にする（右端まで伸ばさず実測幅で）
+    var W = box.width || 520, H = box.height || W * 0.8;
     var avoiding = [];
-    if (plateLabel){
-      var lb = plateLabel.getBoundingClientRect();
+    if (plateCap){
+      var lb = plateCap.getBoundingClientRect();
       if (lb.width) avoiding.push({x: lb.left - box.left - 6, y: 0,
                                    w: lb.width + 12, h: (lb.bottom - box.top) + 8});
     }
@@ -701,13 +908,14 @@ body.iab .fb-iab{display:inline}
     var parts = volumeText(v).split(' ');
     figEl.textContent = parts[0];
     unitEl.textContent = parts[1];
-    readEl.textContent = volumeText(v);
+    roEl.textContent = volumeText(v);
     capEl.textContent = capText(v);
     slider.setAttribute('aria-valuetext', volumeText(v) + (lang === 'ja' ? '、' : ', ') + capText(v));
-    // kg↔t が切り替わった瞬間だけ、単位を小さく点滅させる
     if (parts[1] !== lastUnit){
       lastUnit = parts[1];
-      unitEl.animate ? unitEl.animate([{opacity:1},{opacity:0},{opacity:1}], {duration:140}) : 0;
+      // 動きを減らす設定のときは光らせない（Element.animate はCSSの@mediaで止まらない）
+      if (unitEl.animate && !matchMedia("(prefers-reduced-motion: reduce)").matches)
+        unitEl.animate([{opacity:1},{opacity:0},{opacity:1}], {duration:150});
     }
   }
 
@@ -717,32 +925,70 @@ body.iab .fb-iab{display:inline}
     pending = true;
     requestAnimationFrame(function(){ pending = false; render(parseInt(slider.value, 10)); });
   }
-  if (slider) slider.addEventListener('input', schedule);
+  slider.addEventListener('input', schedule);
   window.addEventListener('resize', schedule);
 
-  // 表示側の数値は定数から生成する（アプリの値とページの表示が食い違わないように）
+  // トン表記は volumeText 一本に統一する（data-kg の値だけをここで流し込む）
   (function syncConstants(){
-    var dds = document.querySelectorAll('dd[data-ref]');
-    for (var i = 0; i < dds.length; i++){
-      var k = dds[i].getAttribute('data-ref');
-      if (REF[k]) dds[i].textContent = REF[k].toLocaleString('en-US') + ' kg';
-    }
     var kgs = document.querySelectorAll('[data-kg]');
     for (var j = 0; j < kgs.length; j++){
       kgs[j].textContent = volumeText(+kgs[j].getAttribute('data-kg'));
     }
     var tick = document.querySelector('.tick');
-    if (tick && slider){
+    if (tick){
       var lo = parseInt(slider.min, 10), hi = parseInt(slider.max, 10);
       var f = (MAMMOTH_FLOOR - lo) / (hi - lo);
-      tick.style.left = 'calc(12px + (100% - 24px) * ' + f.toFixed(4) + ')';
+      tick.style.left = 'calc(8px + (100% - 16px) * ' + f.toFixed(4) + ')';
     }
   })();
 
   render(parseInt(slider.value, 10));
 
-  /* ---- 言語切替: 100%が日本語アカウント経由なので既定は常に日本語 ---- */
-  var bja = document.getElementById('btn-ja'), ben = document.getElementById('btn-en');
+  /* ---- 章の切り替え（下部タブ） ---- */
+  var tabs = [].slice.call(document.querySelectorAll('[role="tab"]'));
+  var KEYS = ['what','how','why','qa','maker'];
+  function showChapter(key, focusTab){
+    var found = false;
+    for (var i = 0; i < tabs.length; i++){
+      var t = tabs[i], k = t.id.replace('t-', '');
+      var on = (k === key);
+      if (on) found = true;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    }
+    if (!found) return showChapter('what');
+    window.scrollTo(0, 0);
+    if (location.hash.slice(1) !== key) history.replaceState(null, '', '#' + key);
+    if (focusTab) document.getElementById('t-' + key).focus();
+    // 図版は表示された後でないと寸法が取れない
+    if (key === 'what') schedule();
+  }
+  for (var ti = 0; ti < tabs.length; ti++){
+    tabs[ti].addEventListener('click', function(){ showChapter(this.id.replace('t-', '')); });
+    tabs[ti].addEventListener('keydown', function(e){
+      var i = KEYS.indexOf(this.id.replace('t-', ''));
+      if (e.key === 'ArrowRight'){ e.preventDefault(); showChapter(KEYS[(i + 1) % KEYS.length], true); }
+      if (e.key === 'ArrowLeft'){ e.preventDefault(); showChapter(KEYS[(i - 1 + KEYS.length) % KEYS.length], true); }
+      if (e.key === 'Home'){ e.preventDefault(); showChapter(KEYS[0], true); }
+      if (e.key === 'End'){ e.preventDefault(); showChapter(KEYS[KEYS.length - 1], true); }
+    });
+  }
+  var goto = document.querySelector('[data-goto]');
+  if (goto) goto.addEventListener('click', function(){
+    var key = this.getAttribute('data-goto');
+    showChapter(key);
+    // このボタン自身が消えるので、フォーカスを新しい章へ移す（body送りを防ぐ）
+    var panel = document.getElementById('p-' + key);
+    if (panel) panel.focus();
+  });
+  if (KEYS.indexOf(location.hash.slice(1)) >= 0) showChapter(location.hash.slice(1));
+  window.addEventListener('hashchange', function(){
+    if (KEYS.indexOf(location.hash.slice(1)) >= 0) showChapter(location.hash.slice(1));
+  });
+
+  /* ---- 言語切替（既定は日本語） ---- */
+  var btnLang = document.getElementById('btn-lang');
   function setLang(l){
     lang = (l === 'en') ? 'en' : 'ja';
     var nodes = document.querySelectorAll('[data-ja]');
@@ -751,78 +997,44 @@ body.iab .fb-iab{display:inline}
       if (val === null) continue;
       if (el.getAttribute('data-html') === '1') el.innerHTML = val; else el.textContent = val;
     }
-    // data-kg は言語に依らないので、切替後に必ず入れ直す
     var kgs = document.querySelectorAll('[data-kg]');
     for (var j = 0; j < kgs.length; j++){
       kgs[j].textContent = volumeText(+kgs[j].getAttribute('data-kg'));
     }
-    document.documentElement.lang = lang;
-    bja.classList.toggle('on', lang === 'ja');
-    ben.classList.toggle('on', lang === 'en');
-    bja.setAttribute('aria-pressed', String(lang === 'ja'));
-    ben.setAttribute('aria-pressed', String(lang === 'en'));
-    capEl.textContent = capText(parseInt(slider.value, 10));
-    try { localStorage.setItem('mf-lang', lang); } catch (e) {}
-  }
-  bja.addEventListener('click', function(){ setLang('ja'); });
-  ben.addEventListener('click', function(){ setLang('en'); });
-
-  /* ---- 追従バー: ヒーローのCTAを過ぎたら出し、依頼ブロックで引っ込める ---- */
-  var bar = document.getElementById('bar');
-  var barLink = bar.querySelector('.pill');
-  barLink.tabIndex = -1;
-  var sentinel = document.getElementById('sentinel');
-  var maker = document.getElementById('d5');
-  if ('IntersectionObserver' in window){
-    var passed = false, atMaker = false;
-    function sync(){
-      var show = passed && !atMaker;
-      bar.classList.toggle('show', show);
-      barLink.tabIndex = show ? 0 : -1;
+    var labelled = document.querySelectorAll('[data-ja-label]');
+    for (var m = 0; m < labelled.length; m++){
+      var lv = labelled[m].getAttribute('data-' + lang + '-label');
+      if (lv) labelled[m].setAttribute('aria-label', lv);
     }
-    new IntersectionObserver(function(es){
-      passed = !es[0].isIntersecting && es[0].boundingClientRect.top < 0;
-      sync();
-    }).observe(sentinel);
-    new IntersectionObserver(function(es){
-      atMaker = es[0].isIntersecting;
-      sync();
-    }, {threshold:0.3}).observe(maker);
+    document.documentElement.lang = lang;
+    // ボタンには「切り替え先」を出す（日本語表示中なら EN）
+    btnLang.textContent = (lang === 'ja') ? 'EN' : '日本語';
+    btnLang.setAttribute('aria-label', (lang === 'ja') ? 'Switch to English' : '日本語に切り替える');
+    capEl.textContent = capText(parseInt(slider.value, 10));
+    slider.setAttribute('aria-valuetext',
+      volumeText(parseInt(slider.value, 10)) + (lang === 'ja' ? '、' : ', ') + capEl.textContent);
   }
+  btnLang.addEventListener('click', function(){ setLang(lang === 'ja' ? 'en' : 'ja'); });
 
-  /* ---- App Store 導線（アプリ内ブラウザ対策・2026-08-12改三） -------------
-     調査結果（2026-08時点・反証チェック済み）:
-     ・Instagram等のMeta製アプリ内ブラウザ(WKWebView)では、apps.apple.com への
-       遷移も itms-apps:// も App Store に渡らず、白画面か無反応で終わる（確定）
-     ・脱出用スキーム（x-safari-https:// 等）はIG v417以降ブロックされ、
-       文脈次第で「アドレスが無効」エラーを出す＝不確実で逆効果になり得る
-     ・業界の定石は「アプリ内ブラウザを検知して、外部ブラウザで開く手順を案内」
-       （Linktree等の主要ツールもこれ以上のことはしていない）
-     方針:
-     ・通常ブラウザ(Safari等)は一切介入しない＝素のリンクで即 App Store（最も確実）
-     ・アプリ内ブラウザ(iOS)だけ、タップを必ず「動く案内」に着地させる。
-       白画面や無反応・エラーダイアログのような手詰まりは絶対に作らない。 */
+  /* ---- App Store 導線（アプリ内ブラウザ対策・2026-08-12） -------------
+     調査結果: Meta製アプリ内ブラウザ(WKWebView)では apps.apple.com も
+     itms-apps:// も App Store に渡らず、白画面か無反応で終わる。脱出用
+     スキームも現在はブロックされ「アドレスが無効」を出すことがある。
+     よって通常ブラウザは一切介入せず、アプリ内ブラウザのときだけ
+     タップを必ず「動く案内」に着地させる（手詰まりを作らない）。 */
   var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  // Metaは「⋯→外部ブラウザで開く」、LINE等はメニュー文言が違うので host を分ける。
-  // Line は語境界つき（Streamline/ Timeline/ などの誤検知を避ける）。
   var ua = navigator.userAgent;
   var isMetaIAB = /Instagram|FBAN|FBAV|FB_IAB|FBIOS/i.test(ua);
   var isOtherIAB = /(^|[\s;()])Line\/\d/i.test(ua);
-  var forcedIAB = /[?&]iab=1/.test(location.search);
-  var isIAB = isMetaIAB || isOtherIAB || forcedIAB;
-  // App Store が開けないのは iOS のアプリ内ブラウザだけ。Android では案内を出さない。
+  var isIAB = isMetaIAB || isOtherIAB || /[?&]iab=1/.test(location.search);
   if (isIAB && isIOS) document.body.classList.add('iab');
-  if (isIOS && isIAB){
+  if (isIAB && isIOS){
     var rescue = document.getElementById('rescue');
     var rescueClose = document.getElementById('rescue-close');
     var rescueCopy = document.getElementById('rescue-copy');
     var rescueCopied = document.getElementById('rescue-copied');
     var lastUrl = 'https://apps.apple.com/jp/app/mammothfit/id6787899611';
-    var storeLinks = document.querySelectorAll('a[href^="https://apps.apple.com"]');
-    // 出荷時のラベルを控えておく（コピー結果でラベルを書き換えるため、
-    // 開き直すたびに必ず元へ戻す。戻さないと前回の「✓ コピーしました」が
-    // 別アプリのリンクに対して残り、表示が嘘になる）
     var COPY_JA = rescueCopy.getAttribute('data-ja');
     var COPY_EN = rescueCopy.getAttribute('data-en');
     function resetCopyUI(){
@@ -831,7 +1043,6 @@ body.iab .fb-iab{display:inline}
       rescueCopy.textContent = (lang === 'en') ? COPY_EN : COPY_JA;
       rescueCopied.hidden = true;
     }
-    // ホストアプリごとに手順の文言を差し替える（Metaだけ「⋯」の位置を断定できる）
     if (isMetaIAB){
       var s1 = document.getElementById('step1'), s2 = document.getElementById('step2');
       s1.setAttribute('data-ja', '右上の <b>「⋯」</b> をタップ');
@@ -841,53 +1052,51 @@ body.iab .fb-iab{display:inline}
       s2.setAttribute('data-en', 'Choose <b>“Open in external browser”</b>');
       s2.innerHTML = s2.getAttribute('data-ja');
     }
-    function openRescue(url){
+    var opener = null;
+    function openRescue(url, from){
       lastUrl = url;
+      opener = from || null;
       resetCopyUI();
       rescue.hidden = false;
       rescue.focus();
     }
+    function closeRescue(){
+      rescue.hidden = true;
+      // 押したボタンにフォーカスを戻す（body送りを防ぐ）
+      if (opener && document.contains(opener)) opener.focus();
+      opener = null;
+    }
+    var storeLinks = document.querySelectorAll('a[href^="https://apps.apple.com"]');
     for (var li = 0; li < storeLinks.length; li++){
       storeLinks[li].addEventListener('click', function(e){
         e.preventDefault();
-        openRescue(this.href);
+        openRescue(this.href, this);
       });
     }
-    rescueClose.addEventListener('click', function(){
-      rescue.hidden = true;
-      rescueCopied.hidden = true;
+    rescueClose.addEventListener('click', closeRescue);
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && !rescue.hidden) closeRescue();
     });
     rescueCopy.addEventListener('click', function(){
       function say(ja, en){
-        // ボタン自身のラベルで結果を返す（指のある場所に反応が出る）
         rescueCopy.setAttribute('data-ja', ja);
         rescueCopy.setAttribute('data-en', en);
         rescueCopy.textContent = (lang === 'en') ? en : ja;
-        rescueCopied.setAttribute('data-ja', 'Safari に貼り付けると開けます');
-        rescueCopied.setAttribute('data-en', 'Paste it into Safari to open');
-        rescueCopied.textContent = (lang === 'en') ? 'Paste it into Safari to open'
-                                                   : 'Safari に貼り付けると開けます';
       }
-      function ok(){ say('✓ コピーしました', '✓ Copied');
-                     rescueCopied.hidden = false; }
+      function ok(){ say('✓ コピーしました', '✓ Copied'); rescueCopied.hidden = false; }
       function ng(){ say('長押し →「リンクをコピー」でも取れます',
-                         'Long-press the button → “Copy Link”');
-                     rescueCopied.hidden = true; }
-      // iOS Safariはreadonly要素のselect()を無視するので、Rangeで選択してから実行する
+                         'Long-press the button → “Copy Link”'); rescueCopied.hidden = true; }
       function legacyCopy(){
         var ta = document.createElement('textarea');
         ta.value = lastUrl;
         ta.contentEditable = 'true';
         ta.readOnly = false;
-        ta.style.position = 'fixed';
-        ta.style.top = '0';
-        ta.style.opacity = '0';
+        ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
         document.body.appendChild(ta);
         var range = document.createRange();
         range.selectNodeContents(ta);
         var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
+        sel.removeAllRanges(); sel.addRange(range);
         ta.setSelectionRange(0, 999999);
         var copied = false;
         try { copied = document.execCommand('copy'); } catch (err) {}
