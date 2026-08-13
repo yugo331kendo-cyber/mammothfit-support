@@ -63,6 +63,22 @@ header{position:relative;z-index:5;background:var(--bg);border-bottom:1px solid 
 .get:active{opacity:.85}
 
 /* ---- 章 ---- */
+/* 章1の2列レイアウト用の器。スマホでは透明にする。
+   ただし透明にすると .control が col-a 側の並び順に引きずられるので、
+   スマホでは flex + order で「図版→数字→説明→利点→スライダー→入手」に戻す。 */
+.col-a,.col-b{display:contents}
+#p-what > .wrap{display:flex;flex-direction:column}
+#p-what .ch-head{order:1}
+#p-what .plate{order:2}
+#p-what .readout{order:3}
+#p-what .breakdown{order:4}
+#p-what .lead{order:5}
+#p-what .points{order:6}
+#p-what .control{order:7}
+#p-what .cta{order:8}
+#p-what .meta{order:9}
+#p-what .fallback{order:10}
+#p-what .more{order:11}
 .chapter{animation:fade .32s var(--ease)}
 .chapter:focus{outline:none}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -276,6 +292,10 @@ footer .cr{display:block;margin-top:10px}
 .link-row .d{display:block;font-size:12.5px;letter-spacing:.05em;color:var(--muted);line-height:1.95}
 .link-row .go{flex:0 0 auto;color:var(--deco);font-size:15px}
 
+/* ---- PC専用の要素。既定は出さない ---- */
+.headnav{display:none}
+.shots{display:none}
+
 /* ---- アプリ内ブラウザ向けの案内 ---- */
 /* 日本のみ配信のものは英語表示では出さない */
 html[lang="en"] .jp-only{display:none}
@@ -309,6 +329,101 @@ body.iab .fb-iab{display:inline}
   .tabs button{font-size:10.5px;letter-spacing:.04em}
 }
 @media (min-width:600px){ :root{--gut:32px} h1{font-size:33px} }
+
+/* ============================================================
+   PC（1024px〜）。参考サイトと同じ考え方で、
+   ・章のナビを下の固定タブから上部へ移す
+   ・冒頭は左に図版・右に言葉の2分割
+   ・以降の章は2〜3列に流し込み、1行の文字数を伸ばしすぎない
+   ============================================================ */
+@media (min-width:1024px){
+  :root{--gut:40px}
+  body{padding-bottom:0}
+  .wrap{max-width:1180px}
+
+  /* 冠にナビを載せる */
+  .head{height:76px;gap:20px}
+  .mark{width:38px;height:38px}
+  .wordmark{font-size:13px}
+  .headnav{display:flex;margin-left:28px;gap:4px}
+  .headnav button{appearance:none;background:transparent;border:0;cursor:pointer;font:inherit;
+    padding:10px 14px;color:var(--muted);font-size:12.5px;letter-spacing:.14em;font-weight:600;
+    position:relative}
+  .headnav button::after{content:"";position:absolute;left:50%;right:50%;bottom:2px;height:1px;
+    background:var(--lemon);transition:left .24s var(--ease), right .24s var(--ease)}
+  .headnav button[aria-selected="true"]{color:var(--ink)}
+  .headnav button[aria-selected="true"]::after{left:14px;right:14px}
+  .headnav button:focus-visible{outline:2px solid var(--lemon);outline-offset:-2px}
+  .lang{margin-left:auto}
+  .tabs{display:none}
+
+  .chapter > .wrap{padding-block:60px 88px}
+
+  /* --- これはなに: 左に図版・右に言葉 --- */
+  #p-what > .wrap{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+    gap:0 68px;align-items:start}
+  #p-what .col-a{display:block;grid-column:1;grid-row:1 / span 2}
+  #p-what .col-b{display:block;grid-column:2;grid-row:2}
+  #p-what .ch-head{grid-column:2;grid-row:1;margin-bottom:24px}
+  #p-what .plate{margin-inline:0}
+  #p-what .stage{aspect-ratio:1/1}
+  #p-what .lead{margin-top:0}
+  #p-what .cta{margin-top:32px}
+  h1{font-size:44px;line-height:1.5}
+  .fig{font-size:54px}
+
+  /* --- つかいかた: 画面の帯 → 手順2列 --- */
+  .shots{display:grid;grid-template-columns:repeat(6,1fr);gap:22px;
+    margin:0 0 56px;padding-bottom:6px}
+  .shots figure{margin:0}
+  .shots img{display:block;width:100%;height:auto;border-radius:18px;
+    background:var(--plate);box-shadow:0 0 0 1px var(--rule-2), 0 18px 40px rgba(0,0,0,.5)}
+  .shots figcaption{margin-top:12px;font-size:10.5px;line-height:1.7;letter-spacing:.08em;
+    color:var(--muted)}
+  .shots-note{grid-column:1 / -1;margin:18px 0 0;font-size:11.5px;line-height:1.9;
+    letter-spacing:.05em;color:var(--muted-2)}
+  .steps{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  .steps > li{border-bottom:1px solid var(--rule)}
+  .steps > li:nth-last-child(-n+2){border-bottom:0}
+
+  /* --- えらぶ理由: 見出しを広く、理由は2列 --- */
+  /* 入手ボタンが横に伸びきると押しづらいので測り幅をそろえる */
+  .chapter > .wrap > .cta,.chapter > .wrap > .meta,.chapter > .wrap > .fallback{
+    max-width:520px;margin-inline:auto}
+  /* 1行が長くなりすぎると読めないので、本文系は測り幅を持たせる */
+  .lead,.note,.sub-lead,.body{max-width:34em}
+  #p-what .lead{max-width:none}
+  #p-why .ch-head{max-width:820px}
+  #p-why .ch-head .lead{max-width:38em}
+  #p-why h2{font-size:32px;line-height:1.6}
+  .reasons{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  .reasons > li{border-bottom:1px solid var(--rule)}
+  .reasons > li:nth-last-child(-n+2){border-bottom:0}
+
+  /* --- Q&A: 2列 --- */
+  .qa{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+  .qa .q{border-bottom:1px solid var(--rule)}
+  .qa .q:nth-last-child(-n+2){border-bottom:0}
+
+  /* --- つくった人: 左に思い・右にアプリと依頼 --- */
+  #p-maker > .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:0 68px;align-items:start}
+  #p-maker .ch-head{grid-column:1 / -1}
+  #p-maker .ch-head h2{font-size:30px;line-height:1.6;max-width:900px}
+  #p-maker .ch-head .lead{max-width:38em}
+  #p-maker .body{grid-column:1}
+  #p-maker h2:not(.ch-head h2){grid-column:2;grid-row:2}
+  #p-maker .sub-lead,#p-maker .apps{grid-column:2}
+  #p-maker .offer{grid-column:2}
+  #p-maker .endline{grid-column:1 / -1;font-size:22px;margin-top:64px}
+
+  footer .wrap{padding-block:34px 44px}
+}
+@media (min-width:1024px) and (max-width:1279px){
+  /* 列数ではなく1枚の幅を抑える（伸びると画面が写真で埋まる） */
+  .shots{grid-template-columns:repeat(3,minmax(0,190px));justify-content:space-between;gap:26px}
+  .shots figure:nth-child(n+4){display:none}
+}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
 }
@@ -320,6 +435,8 @@ body.iab .fb-iab{display:inline}
   <div class="wrap head">
     <span class="mark" aria-hidden="true"></span>
     <span class="wordmark">MAMMOTH<br>FIT</span>
+    <div class="headnav" id="headnav" role="tablist" aria-label="章"
+         data-ja-label="章" data-en-label="Chapters"></div>
     <button type="button" class="lang" id="btn-lang" aria-label="Switch to English">EN</button>
     <a class="get" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
        data-ja="入手" data-en="Get">入手</a>
@@ -336,10 +453,12 @@ body.iab .fb-iab{display:inline}
       <h1 data-html="1" data-ja="1キロが、<br>群れになる。" data-en="A kilo becomes<br>a herd.">1キロが、<br>群れになる。</h1>
     </div>
 
-    <div class="plate">
-      <div class="stage" id="stage">
-        <span class="plate-cap" data-ja="例 — 1週間で動かした重さ" data-en="EXAMPLE — ONE WEEK">例 — 1週間で動かした重さ</span>
-        <div id="herd" aria-hidden="true">
+    <!-- 図版の列。PCでは左半分、スマホでは display:contents で透明になり素の縦並びに戻る -->
+    <div class="col-a">
+      <div class="plate">
+        <div class="stage" id="stage">
+          <span class="plate-cap" data-ja="例 — 1週間で動かした重さ" data-en="EXAMPLE — ONE WEEK">例 — 1週間で動かした重さ</span>
+          <div id="herd" aria-hidden="true">
         <i class="beast b-mammoth flip" style="left:72.81%;top:7.38%;width:30.56%"></i>
         <i class="beast b-elephant" style="left:4.73%;top:16.75%;width:24.36%"></i>
         <i class="beast b-elephant" style="left:40.34%;top:22.96%;width:25.20%"></i>
@@ -349,62 +468,66 @@ body.iab .fb-iab{display:inline}
         <i class="beast b-elephant flip" style="left:46.97%;top:50.86%;width:29.23%"></i>
         <i class="beast b-gorilla flip" style="left:85.74%;top:64.86%;width:15.83%"></i>
         <i class="beast b-gorilla flip" style="left:19.56%;top:68.59%;width:17.36%"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="readout">
+        <span class="fig" id="fig">12.4</span><span class="unit" id="unit">t</span>
+      </div>
+      <p class="breakdown" id="cap">マンモス1 · ゾウ6 · ゴリラ2</p>
+
+      <div class="control">
+        <div class="cap">
+          <label class="label-ja" for="vol" data-ja="動かす" data-en="DRAG">動かす</label>
+          <span class="r" id="ro">12.4 t</span>
+        </div>
+        <div class="track">
+          <input type="range" id="vol" min="500" max="20000" step="100" value="12400">
+          <span class="tick" aria-hidden="true"><i></i><span><span data-kg="8000">8.0 t</span> <span
+            data-ja="マンモス" data-en="mammoth">マンモス</span></span></span>
         </div>
       </div>
     </div>
 
-    <div class="readout">
-      <span class="fig" id="fig">12.4</span><span class="unit" id="unit">t</span>
+    <!-- 言葉の列 -->
+    <div class="col-b">
+      <p class="lead" data-ja="今週やった分だけ、動物が増える。数字を読み解かなくても、やれた週かどうかは群れを見れば分かる。"
+         data-en="The more you did this week, the more animals show up. No spreadsheet to decode — one look at the herd tells you how the week went.">今週やった分だけ、動物が増える。数字を読み解かなくても、やれた週かどうかは群れを見れば分かる。</p>
+
+      <div class="points">
+        <div class="pt">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.5V7.5l10-2v11"/><circle cx="6.5" cy="18.5" r="2.6"/><circle cx="16.5" cy="16.5" r="2.6"/></svg>
+          <p data-ja="広告が出ない。だから、音楽が止まらない。"
+             data-en="No ads — so your music never cuts out.">広告が出ない。だから、音楽が止まらない。</p>
+        </div>
+        <div class="pt">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h16M4 12h16M4 16.5h16"/></svg>
+          <p data-ja="ケトルベルも、ホールドも、ランも、同じログに。"
+             data-en="Kettlebells, holds and runs all live in one log.">ケトルベルも、ホールドも、ランも、同じログに。</p>
+        </div>
+        <div class="pt">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4.5" width="16" height="15" rx="2"/><path d="M8 15l3-3.5 2.5 2.5L16 11"/></svg>
+          <p data-ja="記録し終えた瞬間、共有できる1枚ができている。"
+             data-en="The moment you finish logging, a shareable card is already made.">記録し終えた瞬間、共有できる1枚ができている。</p>
+        </div>
+      </div>
+
+      <a class="cta" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
+         data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
+      <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
+         data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
+      <p class="fallback"><span class="fb-iab" data-html="1"
+          data-ja="アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br>"
+          data-en="In-app browsers can’t open the App Store — <b>open this page in your browser</b>.<br>">アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br></span><span data-html="1"
+          data-ja="開かないときは App Store で <b>「MammothFit」</b> を検索。"
+          data-en="Not opening? Search <b>“MammothFit”</b> on the App Store.">開かないときは App Store で <b>「MammothFit」</b> を検索。</span></p>
+
+      <button class="more" type="button" data-goto="how">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13.5l6 6 6-6"/></svg>
+        <span data-ja="つかいかた" data-en="HOW IT WORKS">つかいかた</span>
+      </button>
     </div>
-    <p class="breakdown" id="cap">マンモス1 · ゾウ6 · ゴリラ2</p>
-
-    <p class="lead" data-ja="今週やった分だけ、動物が増える。数字を読み解かなくても、やれた週かどうかは群れを見れば分かる。"
-       data-en="The more you did this week, the more animals show up. No spreadsheet to decode — one look at the herd tells you how the week went.">今週やった分だけ、動物が増える。数字を読み解かなくても、やれた週かどうかは群れを見れば分かる。</p>
-
-    <div class="points">
-      <div class="pt">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.5V7.5l10-2v11"/><circle cx="6.5" cy="18.5" r="2.6"/><circle cx="16.5" cy="16.5" r="2.6"/></svg>
-        <p data-ja="広告が出ない。だから、音楽が止まらない。"
-           data-en="No ads — so your music never cuts out.">広告が出ない。だから、音楽が止まらない。</p>
-      </div>
-      <div class="pt">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h16M4 12h16M4 16.5h16"/></svg>
-        <p data-ja="ケトルベルも、ホールドも、ランも、同じログに。"
-           data-en="Kettlebells, holds and runs all live in one log.">ケトルベルも、ホールドも、ランも、同じログに。</p>
-      </div>
-      <div class="pt">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4.5" width="16" height="15" rx="2"/><path d="M8 15l3-3.5 2.5 2.5L16 11"/></svg>
-        <p data-ja="記録し終えた瞬間、共有できる1枚ができている。"
-           data-en="The moment you finish logging, a shareable card is already made.">記録し終えた瞬間、共有できる1枚ができている。</p>
-      </div>
-    </div>
-
-    <div class="control">
-      <div class="cap">
-        <label class="label-ja" for="vol" data-ja="動かす" data-en="DRAG">動かす</label>
-        <span class="r" id="ro">12.4 t</span>
-      </div>
-      <div class="track">
-        <input type="range" id="vol" min="500" max="20000" step="100" value="12400">
-        <span class="tick" aria-hidden="true"><i></i><span><span data-kg="8000">8.0 t</span> <span
-          data-ja="マンモス" data-en="mammoth">マンモス</span></span></span>
-      </div>
-    </div>
-
-    <a class="cta" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" rel="noopener"
-       data-ja="App Store で入手" data-en="Get it on the App Store">App Store で入手</a>
-    <p class="meta" data-ja="無料 · 広告なし · Pro は買い切り ¥500"
-       data-en="Free · No ads · Pro is a one-time ¥500">無料 · 広告なし · Pro は買い切り ¥500</p>
-    <p class="fallback"><span class="fb-iab" data-html="1"
-        data-ja="アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br>"
-        data-en="In-app browsers can’t open the App Store — <b>open this page in your browser</b>.<br>">アプリ内ブラウザからは App Store を開けません。<b>メニューから外部ブラウザで開いて</b>ください。<br></span><span data-html="1"
-        data-ja="開かないときは App Store で <b>「MammothFit」</b> を検索。"
-        data-en="Not opening? Search <b>“MammothFit”</b> on the App Store.">開かないときは App Store で <b>「MammothFit」</b> を検索。</span></p>
-
-    <button class="more" type="button" data-goto="how">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13.5l6 6 6-6"/></svg>
-      <span data-ja="つかいかた" data-en="HOW IT WORKS">つかいかた</span>
-    </button>
   </div>
 </section>
 
@@ -416,6 +539,24 @@ body.iab .fb-iab{display:inline}
       <h2 data-ja="開いた日から、すぐ記録できる。" data-en="Log your first set the day you install it.">開いた日から、すぐ記録できる。</h2>
       <p class="lead" data-ja="アカウント登録も、チュートリアルもない。開くといきなりカレンダーが出る。種目は36個ぶん最初から入っている。"
          data-en="No account, no tutorial. It opens straight onto a calendar, with 36 exercises already in the picker.">アカウント登録も、チュートリアルもない。開くといきなりカレンダーが出る。種目は36個ぶん最初から入っている。</p>
+    </div>
+
+    <div class="shots" role="group" aria-label="アプリの画面"
+         data-ja-label="アプリの画面" data-en-label="App screens">
+      <figure><img loading="lazy" width="560" height="1217" data-shot="01_home" alt="">
+        <figcaption data-ja="ホーム — 今週の群れ" data-en="Home — this week’s herd">ホーム — 今週の群れ</figcaption></figure>
+      <figure><img loading="lazy" width="560" height="1217" data-shot="04_circuit" alt="">
+        <figcaption data-ja="サーキット — 全画面タイマー" data-en="Circuit — full-screen timer">サーキット — 全画面タイマー</figcaption></figure>
+      <figure><img loading="lazy" width="560" height="1217" data-shot="03_summary" alt="">
+        <figcaption data-ja="終了 — その日の合計とPR" data-en="Finish — the day’s total and PRs">終了 — その日の合計とPR</figcaption></figure>
+      <figure><img loading="lazy" width="560" height="1217" data-shot="05_progress" alt="">
+        <figcaption data-ja="進捗 — 今月の群れと有酸素バイタル" data-en="Progress — this month’s herd and cardio vitals">進捗 — 今月の群れと有酸素バイタル</figcaption></figure>
+      <figure><img loading="lazy" width="560" height="1217" data-shot="02_gallery" alt="">
+        <figcaption data-ja="鑑賞 — そのまま壁紙に" data-en="Gallery — save as wallpaper">鑑賞 — そのまま壁紙に</figcaption></figure>
+      <figure><img loading="lazy" width="560" height="1217" data-shot="06_sharecard" alt="">
+        <figcaption data-ja="共有 — 黒と金のカード" data-en="Share — a black-and-gold card">共有 — 黒と金のカード</figcaption></figure>
+      <p class="shots-note" data-ja="画面はサンプルデータです。数値は撮影時のもので、6枚がひと続きの記録というわけではありません。"
+         data-en="Screens show sample data. The figures are whatever was logged at capture time — the six shots are not one continuous record.">画面はサンプルデータです。数値は撮影時のもので、6枚がひと続きの記録というわけではありません。</p>
     </div>
 
     <ol class="steps">
@@ -673,8 +814,8 @@ body.iab .fb-iab{display:inline}
     <div class="offer">
       <span class="label-ja" data-ja="制作のご依頼" data-en="AVAILABLE FOR WORK">制作のご依頼</span>
       <h2 style="margin-top:16px" data-ja="Web サイト・LP の制作" data-en="Websites and landing pages">Web サイト・LP の制作</h2>
-      <p class="lead" data-ja="1枚ものの LP、アプリのサポート／プライバシーページ、ストア掲載文まで。このページも同じ作りで、HTML 1枚・外部の読み込みゼロ・追跡なしです。用途と規模を書いて送ってください。返信は本人から。"
-         data-en="One-page LPs, app support and privacy pages, App Store copy. This page is built the same way — one HTML file, zero external requests, no tracking. Write what it’s for and how big it is; you’ll hear back from me.">1枚ものの LP、アプリのサポート／プライバシーページ、ストア掲載文まで。このページも同じ作りで、HTML 1枚・外部の読み込みゼロ・追跡なしです。用途と規模を書いて送ってください。返信は本人から。</p>
+      <p class="lead" data-ja="1枚ものの LP、アプリのサポート／プライバシーページ、ストア掲載文まで。このページも同じ作りで、外部サービスの読み込みゼロ・追跡なし、スマホとPCの両方に対応しています。用途と規模を書いて送ってください。返信は本人から。"
+         data-en="One-page LPs, app support and privacy pages, App Store copy. This page is built the same way — zero third-party requests, no tracking, and it works on both phone and desktop. Write what it’s for and how big it is; you’ll hear back from me.">1枚ものの LP、アプリのサポート／プライバシーページ、ストア掲載文まで。このページも同じ作りで、外部サービスの読み込みゼロ・追跡なし、スマホとPCの両方に対応しています。用途と規模を書いて送ってください。返信は本人から。</p>
       <a class="mail" href="mailto:you.ri21713@gmail.com?subject=Web%E3%82%B5%E3%82%A4%E3%83%88%E3%83%BBLP%E5%88%B6%E4%BD%9C%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87">you.ri21713@gmail.com</a>
     </div>
 
@@ -928,13 +1069,48 @@ body.iab .fb-iab{display:inline}
 
   render(parseInt(slider.value, 10));
 
+  // 画面写真はPC幅のときだけ読み込む（携帯には配らない）
+  var wide = window.matchMedia('(min-width:1024px)');
+  function loadShots(){
+    if (!wide.matches) return;
+    var shots = document.querySelectorAll('img[data-shot]');
+    for (var i = 0; i < shots.length; i++){
+      var want = 'shots/' + lang + '_' + shots[i].getAttribute('data-shot') + '.webp';
+      if (shots[i].getAttribute('src') !== want) shots[i].src = want;
+    }
+  }
+  loadShots();
+  // matchMedia の change は環境によって発火しないので resize でも見る
+  if (wide.addEventListener) wide.addEventListener('change', loadShots);
+  else if (wide.addListener) wide.addListener(loadShots);
+  window.addEventListener('resize', loadShots);
+
   /* ---- 章の切り替え（下部タブ） ---- */
-  var tabs = [].slice.call(document.querySelectorAll('[role="tab"]'));
   var KEYS = ['what','how','why','qa','maker'];
+
+  // PC用の上部ナビは下部タブから複製する（文言と選択状態は showChapter が両方を更新）
+  var headnav = document.getElementById('headnav');
+  var bottomTabs = [].slice.call(document.querySelectorAll('.tabs [role="tab"]'));
+  for (var bi = 0; bi < bottomTabs.length; bi++){
+    var src = bottomTabs[bi];
+    var c = document.createElement('button');
+    c.type = 'button';
+    c.setAttribute('role', 'tab');
+    c.id = 'h-' + src.id.slice(2);
+    c.setAttribute('aria-controls', src.getAttribute('aria-controls'));
+    c.setAttribute('data-ja', src.getAttribute('data-ja'));
+    c.setAttribute('data-en', src.getAttribute('data-en'));
+    // 選択状態とタブ順も引き継ぐ（ハッシュ無しで開いたとき showChapter が走らないため）
+    c.setAttribute('aria-selected', src.getAttribute('aria-selected'));
+    c.tabIndex = src.tabIndex;
+    c.textContent = src.textContent;
+    headnav.appendChild(c);
+  }
+  var tabs = [].slice.call(document.querySelectorAll('[role="tab"]'));
   function showChapter(key, focusTab){
     var found = false;
     for (var i = 0; i < tabs.length; i++){
-      var t = tabs[i], k = t.id.replace('t-', '');
+      var t = tabs[i], k = t.id.slice(2);
       var on = (k === key);
       if (on) found = true;
       t.setAttribute('aria-selected', String(on));
@@ -944,14 +1120,18 @@ body.iab .fb-iab{display:inline}
     if (!found) return showChapter('what');
     window.scrollTo(0, 0);
     if (location.hash.slice(1) !== key) history.replaceState(null, '', '#' + key);
-    if (focusTab) document.getElementById('t-' + key).focus();
+    if (focusTab){
+      var top = document.getElementById('h-' + key);
+      var vis = (top && top.offsetParent !== null) ? top : document.getElementById('t-' + key);
+      vis.focus();
+    }
     // 図版は表示された後でないと寸法が取れない
     if (key === 'what') schedule();
   }
   for (var ti = 0; ti < tabs.length; ti++){
-    tabs[ti].addEventListener('click', function(){ showChapter(this.id.replace('t-', '')); });
+    tabs[ti].addEventListener('click', function(){ showChapter(this.id.slice(2)); });
     tabs[ti].addEventListener('keydown', function(e){
-      var i = KEYS.indexOf(this.id.replace('t-', ''));
+      var i = KEYS.indexOf(this.id.slice(2));
       if (e.key === 'ArrowRight'){ e.preventDefault(); showChapter(KEYS[(i + 1) % KEYS.length], true); }
       if (e.key === 'ArrowLeft'){ e.preventDefault(); showChapter(KEYS[(i - 1 + KEYS.length) % KEYS.length], true); }
       if (e.key === 'Home'){ e.preventDefault(); showChapter(KEYS[0], true); }
@@ -997,6 +1177,7 @@ body.iab .fb-iab{display:inline}
     capEl.textContent = capText(parseInt(slider.value, 10));
     slider.setAttribute('aria-valuetext',
       volumeText(parseInt(slider.value, 10)) + (lang === 'ja' ? '、' : ', ') + capEl.textContent);
+    loadShots();   // 画面写真も言語に合わせて差し替える
   }
   btnLang.addEventListener('click', function(){ setLang(lang === 'ja' ? 'en' : 'ja'); });
 
