@@ -1,138 +1,177 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>MammothFit — 1キロが、群れになる</title>
-<meta name="description" content="MammothFit: 挙げた重さの合計が動物の群れになる筋トレ記録アプリ。広告なし、アカウント不要。App Storeで入手。"/>
-<meta name="theme-color" content="#070809"/>
-<meta name="apple-itunes-app" content="app-id=6787899611"/>
-<link rel="canonical" href="https://yugo331kendo-cyber.github.io/mammothfit-support/go/"/>
-<meta property="og:title" content="MammothFit — 1キロが、群れになる"/>
-<meta property="og:description" content="挙げた重さの合計が、そのまま群れになる筋トレ記録アプリ。"/>
-<meta property="og:image" content="https://yugo331kendo-cyber.github.io/mammothfit-support/go/shots/ja_06_sharecard.webp"/>
-<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="go.css"/>
-<link rel="stylesheet" href="m-person.css"/>
-<link rel="stylesheet" href="m-sumo.css"/>
-<link rel="stylesheet" href="m-gorilla.css"/>
-<link rel="stylesheet" href="m-elephant.css"/>
-<link rel="stylesheet" href="m-mammoth.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>MammothFit — 1キロが、群れになる</title>
+  <meta name="description" content="MammothFit: 挙げた重さの合計が動物の群れになる筋トレ記録アプリ。広告なし、アカウント不要。App Storeで入手。" />
+  <meta name="theme-color" content="#070809" />
+  <meta name="apple-itunes-app" content="app-id=6787899611" />
+  <link rel="canonical" href="https://yugo331kendo-cyber.github.io/mammothfit-support/go/" />
+  <meta property="og:title" content="MammothFit — 1キロが、群れになる" />
+  <meta property="og:description" content="挙げた重さの合計が、そのまま群れになる筋トレ記録アプリ。" />
+  <meta property="og:url" content="https://yugo331kendo-cyber.github.io/mammothfit-support/go/" />
+  <meta property="og:image" content="https://yugo331kendo-cyber.github.io/mammothfit-support/go/shots/ja_06_sharecard.webp" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="go.css" />
+  <link rel="stylesheet" href="m-person.css" />
+  <link rel="stylesheet" href="m-sumo.css" />
+  <link rel="stylesheet" href="m-gorilla.css" />
+  <link rel="stylesheet" href="m-elephant.css" />
+  <link rel="stylesheet" href="m-mammoth.css" />
 </head>
 <body>
-<header>
-<a class="brand" href="#top"><span class="mark">MF</span> MammothFit</a>
-<nav>
-<a href="#herd" data-t="navHerd"></a>
-<a href="#how" data-t="navHow"></a>
-<a href="#why" data-t="navWhy"></a>
-<a href="#qa" data-t="navQa"></a>
-</nav>
-<div style="display:flex;gap:8px;align-items:center">
-<button class="lang" id="langBtn" type="button">EN</button>
-<a class="btn store" data-t="get"></a>
-</div>
-</header>
-<section class="hero" id="top">
-<div class="hero-mark" aria-hidden="true"></div>
-<div class="wrap">
-<div class="kicker" data-t="kicker"></div>
-<h1><span data-t="h1a"></span><br><span data-t="h1b"></span></h1>
-<p class="lead" data-t="lead"></p>
-<p><a class="btn store" data-t="get"></a></p>
-<p class="meta" data-t="meta"></p>
-</div>
-</section>
-<section class="section" id="herd">
-<div class="wrap">
-<div class="kicker" data-t="navHerd"></div>
-<h2 data-t="h1b"></h2>
-<div class="chips">
-<button class="chip on" data-mode="mix" data-t="mix"></button>
-<button class="chip" data-mode="person">人</button>
-<button class="chip" data-mode="sumo">力士</button>
-<button class="chip" data-mode="gorilla">ゴリラ</button>
-<button class="chip" data-mode="elephant">ゾウ</button>
-<button class="chip" data-mode="mammoth">マンモス</button>
-</div>
-<p class="dim" id="packHint" hidden data-t="packHint"></p>
-<div class="herd-stage" id="stage"></div>
-<div class="row" style="margin-top:14px">
-<div class="vol" id="volNum">12.4 t</div>
-<div class="dim" id="volSub"></div>
-</div>
-<input id="vol" type="range" min="500" max="20000" step="100" value="12400"/>
-</div>
-</section>
-<section class="section"><div class="wrap grid g3"><div class="card" data-t="proof1"></div><div class="card" data-t="proof2"></div><div class="card" data-t="proof3"></div></div></section>
-<section class="section" id="how">
-<div class="wrap">
-<div class="kicker" data-t="howK"></div>
-<h2 data-t="howT"></h2>
-<p class="lead dim" data-t="howL"></p>
-<div class="grid g2" style="margin-top:28px">
-<div class="card"><strong data-t="how1t"></strong><p data-t="how1"></p></div>
-<div class="card"><strong data-t="how2t"></strong><p data-t="how2"></p></div>
-<div class="card"><strong data-t="how3t"></strong><p data-t="how3"></p></div>
-<div class="card"><strong data-t="how4t"></strong><p data-t="how4"></p></div>
-</div>
-<div class="grid g3" style="margin-top:40px">
-<figure><div class="phone"><img src="shots/ja_01_home.webp" alt="" width="560" height="1217" id="s1"/></div><figcaption data-t="ph1"></figcaption></figure>
-<figure><div class="phone"><img src="shots/ja_04_circuit.webp" alt="" width="560" height="1217" id="s2"/></div><figcaption data-t="ph2"></figcaption></figure>
-<figure><div class="phone"><img src="shots/ja_06_sharecard.webp" alt="" width="560" height="1217" id="s3"/></div><figcaption data-t="ph3"></figcaption></figure>
-</div></div></section>
-<section class="section" id="why">
-<div class="wrap">
-<div class="kicker" data-t="whyK"></div>
-<h2 data-t="whyT"></h2>
-<p class="lead dim" data-t="whyL"></p>
-<div class="grid g2" style="margin-top:28px">
-<div class="card"><strong data-t="w1t"></strong><p data-t="w1"></p></div>
-<div class="card"><strong data-t="w2t"></strong><p data-t="w2"></p></div>
-<div class="card"><strong data-t="w3t"></strong><p data-t="w3"></p></div>
-<div class="card"><strong data-t="w4t"></strong><p data-t="w4"></p></div>
-<div class="card"><strong data-t="w5t"></strong><p data-t="w5"></p></div>
-<div class="card"><strong data-t="w6t"></strong><p data-t="w6"></p></div>
-</div></div></section>
-<section class="section" id="qa">
-<div class="wrap">
-<div class="kicker" data-t="qaK"></div>
-<h2 data-t="qaT"></h2>
-<details open><summary data-t="q1"></summary><p data-t="a1"></p></details>
-<details><summary data-t="q2"></summary><p data-t="a2"></p></details>
-<details><summary data-t="q3"></summary><p data-t="a3"></p></details>
-<details><summary data-t="q4"></summary><p data-t="a4"></p></details>
-<details><summary data-t="q5"></summary><p data-t="a5"></p></details>
-<details><summary data-t="q6"></summary><p data-t="a6"></p></details>
-</div></section>
-<section class="section" id="maker">
-<div class="wrap">
-<div class="kicker" data-t="makerK"></div>
-<h2 data-t="makerT"></h2>
-<p class="lead" data-t="makerL"></p>
-<p><a class="btn ghost" href="https://www.instagram.com/yugo.mammothfit/" data-t="igC"></a></p>
-</div></section>
-<section class="endline-band">
-<div class="end-mark" aria-hidden="true"></div>
-<div class="wrap">
-<p class="endline"><span data-t="endA"></span><br><span data-t="endB"></span></p>
-<p style="margin-top:28px;position:relative;z-index:1"><a class="btn store" style="background:#111;color:#F2E400" data-t="get"></a></p>
-</div></section>
-<footer>
-<a href="https://yugo331kendo-cyber.github.io/mammothfit-support/" data-t="support"></a>
-<a href="https://yugo331kendo-cyber.github.io/mammothfit-support/privacy/" data-t="privacy"></a>
-<span>© MammothFit</span>
-</footer>
-<a class="btn sticky store" data-t="get"></a>
-<div class="iab" id="iab">
-<div class="iab-box">
-<h3 data-t="rescueT"></h3>
-<ol><li data-t="rescue1"></li><li data-t="rescue2"></li><li data-t="rescue3"></li></ol>
-<p><button class="btn" id="copyLink" type="button" data-t="rescueCopy"></button></p>
-<p><button class="btn ghost" id="iabClose" type="button">OK</button></p>
-</div></div>
-<script src="go.js"></script>
-</body></html>
+  <header>
+    <a class="brand" href="#top"><span class="mark">MF</span> MammothFit</a>
+    <nav>
+      <a href="#herd" data-t="navHerd"></a>
+      <a href="#how" data-t="navHow"></a>
+      <a href="#why" data-t="navWhy"></a>
+      <a href="#qa" data-t="navQa"></a>
+    </nav>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="lang" id="langBtn" type="button">EN</button>
+      <a class="btn store" data-t="get"></a>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-mark b-mammoth" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="kicker" data-t="kicker"></div>
+      <h1><span data-t="h1a"></span><br><span data-t="h1b"></span></h1>
+      <p class="lead" data-t="lead"></p>
+      <p><a class="btn store" data-t="get"></a></p>
+      <p class="meta" data-t="meta"></p>
+    </div>
+  </section>
+
+  <section class="section" id="herd">
+    <div class="wrap">
+      <div class="kicker" data-t="navHerd"></div>
+      <h2 data-t="h1b"></h2>
+      <div class="chips">
+        <button class="chip on" data-mode="mix" data-t="mix"></button>
+        <button class="chip" data-mode="person">人</button>
+        <button class="chip" data-mode="sumo">力士</button>
+        <button class="chip" data-mode="gorilla">ゴリラ</button>
+        <button class="chip" data-mode="elephant">ゾウ</button>
+        <button class="chip" data-mode="mammoth">マンモス</button>
+      </div>
+      <p class="dim" id="packHint" hidden data-t="packHint"></p>
+      <div class="herd-stage" id="stage"></div>
+      <div class="row" style="margin-top:14px">
+        <div class="vol" id="volNum">12.4 t</div>
+        <div class="dim" id="volSub"></div>
+      </div>
+      <input id="vol" type="range" min="500" max="20000" step="100" value="12400" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid g3 proofs">
+      <div class="card" data-t="proof1"></div>
+      <div class="card" data-t="proof2"></div>
+      <div class="card" data-t="proof3"></div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="kicker" data-t="howK"></div>
+      <h2 data-t="howT"></h2>
+      <p class="lead dim" data-t="howL"></p>
+      <div class="grid g2" style="margin-top:28px">
+        <div class="card"><strong data-t="how1t"></strong><p data-t="how1"></p></div>
+        <div class="card"><strong data-t="how2t"></strong><p data-t="how2"></p></div>
+        <div class="card"><strong data-t="how3t"></strong><p data-t="how3"></p></div>
+        <div class="card"><strong data-t="how4t"></strong><p data-t="how4"></p></div>
+      </div>
+      <div class="grid g3" style="margin-top:40px">
+        <figure>
+          <div class="phone"><img src="shots/ja_01_home.webp" alt="" width="560" height="1217" id="s1" /></div>
+          <figcaption data-t="ph1"></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="shots/ja_04_circuit.webp" alt="" width="560" height="1217" id="s2" /></div>
+          <figcaption data-t="ph2"></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="shots/ja_06_sharecard.webp" alt="" width="560" height="1217" id="s3" /></div>
+          <figcaption data-t="ph3"></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="kicker" data-t="whyK"></div>
+      <h2 data-t="whyT"></h2>
+      <p class="lead dim" data-t="whyL"></p>
+      <div class="grid g2" style="margin-top:28px">
+        <div class="card"><strong data-t="w1t"></strong><p data-t="w1"></p></div>
+        <div class="card"><strong data-t="w2t"></strong><p data-t="w2"></p></div>
+        <div class="card"><strong data-t="w3t"></strong><p data-t="w3"></p></div>
+        <div class="card"><strong data-t="w4t"></strong><p data-t="w4"></p></div>
+        <div class="card"><strong data-t="w5t"></strong><p data-t="w5"></p></div>
+        <div class="card"><strong data-t="w6t"></strong><p data-t="w6"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="qa">
+    <div class="wrap">
+      <div class="kicker" data-t="qaK"></div>
+      <h2 data-t="qaT"></h2>
+      <details open><summary data-t="q1"></summary><p data-t="a1"></p></details>
+      <details><summary data-t="q2"></summary><p data-t="a2"></p></details>
+      <details><summary data-t="q3"></summary><p data-t="a3"></p></details>
+      <details><summary data-t="q4"></summary><p data-t="a4"></p></details>
+      <details><summary data-t="q5"></summary><p data-t="a5"></p></details>
+      <details><summary data-t="q6"></summary><p data-t="a6"></p></details>
+    </div>
+  </section>
+
+  <section class="section" id="maker">
+    <div class="wrap">
+      <div class="kicker" data-t="makerK"></div>
+      <h2 data-t="makerT"></h2>
+      <p class="lead" data-t="makerL"></p>
+      <p><a class="btn ghost" href="https://www.instagram.com/yugo.mammothfit/" data-t="igC"></a></p>
+    </div>
+  </section>
+
+  <section class="endline-band">
+    <div class="end-mark b-mammoth" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="endline"><span data-t="endA"></span><br><span data-t="endB"></span></p>
+      <p style="margin-top:28px;position:relative;z-index:1"><a class="btn" style="background:#111;color:#F2E400" href="https://apps.apple.com/jp/app/mammothfit/id6787899611" data-t="get"></a></p>
+    </div>
+  </section>
+
+  <footer>
+    <a href="https://yugo331kendo-cyber.github.io/mammothfit-support/" data-t="support"></a>
+    <a href="https://yugo331kendo-cyber.github.io/mammothfit-support/privacy/" data-t="privacy"></a>
+    <span>© MammothFit</span>
+  </footer>
+  <a class="btn sticky store" data-t="get"></a>
+
+  <div class="iab" id="iab">
+    <div class="iab-box">
+      <h3 data-t="rescueT"></h3>
+      <ol>
+        <li data-t="rescue1"></li>
+        <li data-t="rescue2"></li>
+        <li data-t="rescue3"></li>
+      </ol>
+      <p><button class="btn" id="copyLink" type="button" data-t="rescueCopy"></button></p>
+      <p><button class="btn ghost" id="iabClose" type="button">OK</button></p>
+    </div>
+  </div>
+  <script src="go.js"></script>
+  </body>
+</html>
